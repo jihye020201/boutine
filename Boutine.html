@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Minimal Hero – Responsive</title>
+<style>
+  :root { --nav-h: 64px; --ink:#0b0b0b; }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif; color: var(--ink); }
+
+  /* 상단 메뉴바 */
+  header.nav{
+    position: fixed; top:0; left:0; right:0; height: var(--nav-h); z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,.85); backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0,0,0,.06);
+  }
+  .menu{ display:flex; gap: clamp(12px, 6vw, 80px); }
+  .menu a{ text-decoration: none; font-weight: 600; color: var(--ink); padding: 8px 12px; border-radius: 999px; }
+  .menu a:hover{ background: rgba(0,0,0,.06); }
+
+  main{ padding-top: var(--nav-h); }
+
+  /* 히어로 */
+  .hero{
+    min-height: calc(100vh - var(--nav-h));
+    position: relative;
+    display: grid; place-items: center;
+    overflow: hidden;
+    padding: clamp(12px, 4vw, 40px);
+      background: linear-gradient(
+    180deg,
+    #ffffff 0%,    /* top – 밝은 하늘색 */
+    #ffffff 75%,   /* middle – 보라빛 살짝 */
+    #0a0e27 100%   /* bottom – 짙은 블루블랙 */
+  );
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  }
+
+  /* 배경 큰 글자 */
+  .bg-word {
+  position: absolute;
+  top: 50%;              /* 화면 높이의 정중앙 */
+  left: 50%;             /* 화면 가로의 정중앙 */
+  transform: translate(-50%, -75%) scaleY(1.8) skewX(-20deg) ;/* 정확한 중앙 정렬 */
+  margin: 0;
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+  font-size: clamp(120px, 24vw, 500px);
+  color: #000;
+  opacity: 1;            /* 진한 블랙 */
+  user-select: none;
+  white-space: nowrap;
+}
+
+
+  /* ★ 여기부터 목업: 중복 선언 없고, aspect-ratio 강제 제거 */
+  .mock{
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    /* 디버깅용 가이드선: 필요 없으면 지워 */
+    /* outline: 1px dashed #ddd; */
+  }
+
+  /* 원본 그대로 + 화면 넘치면 자동 축소 */
+  .mock img{
+    width: auto;
+    height: auto;
+    max-width: min(90vw, 520px);
+    max-height: calc(100vh - var(--nav-h) - 120px);
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(24px) scale(.96);
+      --float-ampl: 30px;   /* 위아래 진폭(살짝 키움: 10px → 14px) */
+  --float-speed: 4.0s;  /* 속도(빠르게: 6s → 3.2s) */
+  }
+
+  /* 등장 후 둥둥 모션 */
+.mock.show img{
+  animation:
+    pop-in 700ms cubic-bezier(.2,.9,.2,1) 0s both,
+    float-bob var(--float-speed) ease-in-out .9s infinite;
+}
+
+/* 부드러운 스크롤(선택) */
+html { scroll-behavior: smooth; }
+
+/* 공통 컨테이너 */
+.wrap{
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 64px);
+  text-align: left;
+}
+
+/* Overview 섹션 */
+.overview{
+  background: #e0e0e0;               /* 스샷같은 연회색 */
+  border-top: 1px solid rgba(0,0,0,.08);
+  min-height: clamp(300px, 52vh, 560px);
+  display: flex; align-items: center; /* 세로 가운데 정렬 */
+    background: #0a0e27; /* hero 마지막 색과 동일 */
+  color: #fff;
+}
+
+/* 타이포 */
+.overview .eyebrow{
+  margin: 0 0 10px;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; color: #00ffff;
+}
+.overview .title-lg{
+  margin: 0 0 16px;
+  font-weight: 900; line-height: 1.15;
+  font-size: clamp(22px, 4.6vw, 44px);
+ background: linear-gradient(90deg, #9cc5ff 0%, #ff6309 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* 브라우저 호환 대비 */
+  background-clip: text;
+  color: transparent;
+}
+.overview .desc{
+  margin: 0;
+  font-size: clamp(14px, 1.6vw, 16px);
+  color: #ffffff; opacity: .85;
+}
+
+/* 두 섹션을 같은 톤으로 잇기 위한 기준색 */
+:root{ --bg-dark:#0a0e27; }
+
+/* overview는 어두운 배경 유지 */
+.overview{
+  background: var(--bg-dark);
+  color:#fff;
+}
+
+/* 화면 꽉찬 이미지 섹션 */
+.full-image{
+  position: relative;
+  width: 100%;
+  height: 80vh;          /* 화면 가득 */
+  overflow: hidden;
+  background: var(--bg-dark); /* 위에서 내려오는 색과 연결 안전장치 */
+}
+
+/* 이미지가 항상 화면을 채우도록 */
+.full-image img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit: cover; object-position: center;
+  display:block;
+}
+
+/* 🔥 핵심: 위쪽을 overview 색으로 블렌딩하여 자연스럽게 이어짐 */
+.full-image::before{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(
+    to bottom,
+    var(--bg-dark) 0%,
+    rgba(10,14,39,0.92) 18%,
+    rgba(10,14,39,0.75) 30%,
+    rgba(10,14,39,0.40) 45%,
+    rgba(10,14,39,0.00) 60%
+  );
+  pointer-events:none; z-index:1;
+}
+
+/* (옵션) 아래쪽 가벼운 비네트 */
+.full-image::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(0,0,0,.22) 0%, transparent 30%);
+  mix-blend-mode: multiply;
+  pointer-events:none; z-index:1;
+}
+
+
+/* 비디오 섹션(어두운 배경으로 앞 섹션과 자연스럽게 이어짐) */
+.video{
+  background:#0a0e27;
+  color:#fff;
+  padding: clamp(48px, 10vh, 120px) 0;
+}
+.video-inner{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 64px);
+  text-align:center;
+}
+.video-title{
+  margin: 0 0 clamp(24px, 4vh, 48px);
+  font-weight: 800;
+  letter-spacing:.02em;
+}
+
+/* 비디오 카드 */
+.video-wrap{
+  margin: 0 auto;
+  width: min(92vw, 980px);
+  aspect-ratio: 16 / 9;                 /* 반응형 비율 */
+  background:#eceff2;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 14px;
+  box-shadow: 0 24px 80px rgba(0,0,0,.35);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 비디오 엘리먼트 */
+.video-wrap video{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit: cover;
+  display:block;
+  border-radius: inherit;
+  background:#eceff2;
+}
+
+/* 중앙 재생 버튼 (원형) */
+.video-wrap .play{
+  position:absolute; inset:0; margin:auto;
+  width:72px; height:72px; border-radius:50%;
+  border:0; background:rgba(255,255,255,.85);
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  cursor:pointer;
+  display:grid; place-items:center;
+  transition:transform .18s ease, background .18s ease, opacity .18s ease;
+}
+.video-wrap .play::before{
+  content:"";
+  display:block;
+  width:0; height:0;
+  border-left:18px solid #6b7280;      /* ▶ 삼각형 */
+  border-top:12px solid transparent;
+  border-bottom:12px solid transparent;
+  margin-left:4px;
+}
+.video-wrap .play:hover{ transform: scale(1.06); background:#fff; }
+
+/* 재생 중에는 버튼 숨김 */
+.video-wrap.is-playing .play{ opacity:0; pointer-events:none; }
+
+
+.background {
+  background: #fff;           /* 흰색 배경 */
+  color: #000;                /* 검정 글씨 */
+  min-height: clamp(400px, 80vh, 900px); /* 기본 높이 확보 */
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  padding: clamp(80px, 10vh, 140px) 0 clamp(120px, 15vh, 200px);
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+.background .wrap {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center; /* 가운데 정렬 */
+}
+
+/* 상단 작은 소제목 */
+.background .eyebrow {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: #000;
+}
+
+/* 큰 제목 */
+.background .title-lg {
+  margin: 0 0 12px;
+  font-weight: 900;
+  line-height: 1.15;
+  font-size: clamp(22px, 4.6vw, 44px);
+}
+
+/* 설명 텍스트 */
+.background .desc {
+  margin: 0;
+  font-size: clamp(14px, 1.6vw, 16px);
+  color: #333;
+  opacity: .9;
+}
+
+/* 아래 여백 공간 (아직 내용 안 들어간 부분) */
+.blank-space {
+  margin-top: clamp(60px, 12vh, 160px);
+  width: 100%;
+  height: clamp(300px, 40vh, 500px);
+  background: transparent; /* 나중에 이미지나 카드 들어갈 자리 */
+  border: 1px dashed rgba(0,0,0,.1); /* 임시 가이드선 (나중에 삭제 가능) */
+}
+
+
+.image-reveal {
+  background: #fff;
+  color: #000;
+  padding: clamp(100px, 12vh, 180px) 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+.image-reveal .wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 64px);
+  text-align: center;
+}
+
+.image-reveal .title-lg {
+  margin-bottom: clamp(32px, 8vh, 64px);
+  font-weight: 900;
+  font-size: clamp(22px, 4.6vw, 44px);
+}
+
+.image-reveal figure {
+  margin: 0 auto;
+  max-width: 960px;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+/* 이미지 비율 유지 */
+.image-reveal img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 등장 애니메이션 */
+.reveal {
+  opacity: 0;
+  transform: translateY(70px);
+  will-change: transform, opacity;
+}
+
+.reveal.in {
+  animation: rise-in 1200ms cubic-bezier(.22,.9,.2,1) both; 
+}
+
+
+
+  @keyframes pop-in{
+    0%   { opacity:0; transform: translateY(24px) scale(.96); }
+    60%  { opacity:1; transform: translateY(-6px) scale(1.02); }
+    100% { opacity:1; transform: translateY(0)    scale(1); }
+  }
+@keyframes float-bob{
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); }
+  50%  { transform: translateY(calc(var(--float-ampl) * -1)) translateX(4px) rotate(0.25deg); }
+  100% { transform: translateY(0) translateX(0) rotate(0deg); }
+}
+
+
+  @media (prefers-reduced-motion: reduce){
+    .mock img{ opacity:1; transform:none; animation:none; }
+  }
+
+  /* 모바일 보정 */
+  @media (max-width: 640px){
+    :root { --nav-h: 56px; }
+    .menu{ gap: 20px; }
+    .bg-word{ opacity: .08; }
+  }
+
+  @media (min-width: 1200px){
+  .overview .wrap{
+    width: min(1100px, 100%);      /* 최대폭은 유지 */
+    margin-left: clamp(40px, 8vw, 160px); /* 왼쪽 여백만 */
+    margin-right: 0;               /* 중앙 정렬 해제 */
+    padding-left: 0;                /* 좌측 패딩은 빼고 */
+    padding-right: clamp(16px, 4vw, 64px); /* 우측만 살짝 */
+  }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(60px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; animation: none; }
+}
+
+
+</style>
+</head>
+<body>
+  <header class="nav">
+    <nav class="menu">
+      <a href="#">Home</a>
+      <a href="#">Video</a>
+      <a href="#">Service</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 class="bg-word">BOUTINE</h1>
+      <div class="mock" id="mock">
+        <!-- 파일이 html과 같은 폴더라면 이렇게 -->
+        <img src="02_1.png" alt="목업">
+        <!-- 만약 images 폴더 안이면: <img src="images/02_1.png" alt="목업"> -->
+      </div>
+
+    </section>
+    <section class="overview" id="overview">
+  <div class="wrap">
+    <p class="eyebrow">Overview</p>
+    <h2 class="title-lg">독서도 러닝처럼<br>Boutine</h2>
+    <p class="desc">요즘 사람들은 힙한 것, 감각적인 것, 나만의 취향을 사랑합니다.
+운동, 카페, 전시회, 심지어 루틴까지도 스타일로 소비하죠.그런데 문득 이런 생각이 들었어요.
+“독서도 힙하게 할 수는 없을까?”
+이 질문이 바로 Boutine의 시작이었습니다.
+</p>
+  </div>
+    </section>
+
+  <section class="full-image">
+  <img src="run.png" alt="full image">
+</section>
+
+<section class="video" id="video">
+  <div class="video-inner">
+    <h3 class="video-title">Video</h3>
+
+    <div class="video-wrap">
+      <video id="demoVideo"
+             preload="metadata"
+             playsinline webkit-playsinline
+             controlslist="nodownload noplaybackrate"
+             poster="video-poster.jpg">
+        <source src="video.mp4" type="video/mp4" />
+        동영상 재생을 지원하지 않는 브라우저입니다.
+      </video>
+
+      <!-- 중앙 재생 버튼 -->
+      <button class="play" aria-label="재생"></button>
+    </div>
+  </div>
+</section>
+
+<section class="background" id="background">
+  <div class="wrap">
+    <p class="eyebrow">Background</p>
+    <h2 class="title-lg">텍스트힘 유행 관련</h2>
+    <p class="desc">배경 서사에 관한 간단한 설명 글</p>
+
+    <div class="blank-space"></div>
+  </div>
+</section>
+
+<section class="image-reveal" id="image-reveal">
+  <div class="wrap">
+    <h2 class="title-lg">프로젝트 주요 이미지</h2>
+    <figure class="reveal">
+      <img src="oximage.png" alt="메인 이미지">
+    </figure>
+  </div>
+</section>
+
+
+
+
+  </main>
+
+  <script>
+    window.addEventListener('load', () => {
+      const mock = document.getElementById('mock');
+      if (mock) mock.classList.add('show');
+    });
+
+      (function(){
+    const video = document.getElementById('demoVideo');
+    const wrap  = video?.closest('.video-wrap');
+    const btn   = wrap?.querySelector('.play');
+    if(!video || !wrap || !btn) return;
+
+    const showBtn = () => { wrap.classList.remove('is-playing'); };
+    const hideBtn = () => { wrap.classList.add('is-playing'); };
+
+    btn.addEventListener('click', () => {
+      video.muted = false;     // 필요시 true로 두면 자동재생 제약 완화
+      video.controls = true;   // 재생 후 컨트롤 표시
+      video.play();
+      hideBtn();
+    });
+
+    // 사용자가 일시정지하면 버튼 다시 보이게
+    video.addEventListener('pause', showBtn);
+    video.addEventListener('ended', showBtn);
+  })();
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.65 });
+
+
+  document.querySelectorAll('.reveal').forEach(el=>{
+    observer.observe(el);
+  });
+  </script>
+</body>
+</html>
