@@ -1,0 +1,4202 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" href="./mystyle.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css" rel="stylesheet" />
+<title>Boutine</title>
+<style>
+  :root { --nav-h: 64px; --ink:#0b0b0b; }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0;overflow-x: hidden; }
+  body {
+  font-family: "SUIT", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+  background: #121212;
+  color: #fff;
+}
+
+
+/* ============================================= */
+/* 헤더(메뉴바) */
+/* ============================================= */
+:root{
+  --rail-left: clamp(10px, 4vw, 120px);   /* 왼쪽 기준선(히어로랑 맞춤) */
+  --page-width: min(1100px, 100%);        /* 텍스트 최대폭 */
+}
+
+/* 모든 텍스트 블록을 같은 왼쪽 선에 맞추는 유틸 */
+.rail-wrap{
+  width: var(--page-width);
+  margin-left: calc(var(--rail-left) * -1);
+  margin-right: auto;
+  text-align: left;
+}
+
+header.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 10;
+  background: #000000d6; 
+  border-bottom: 1px solid rgb(255, 255, 255);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+body:hover header.nav,
+header.nav:hover {
+  transform: translateY(0);
+  opacity: 1;
+}
+header.nav .nav-inner  { 
+  max-width: 1600px;
+  margin: 0 auto;
+  height: 100%;
+  padding-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 로고이미지 */
+.nav-inner .logo img {
+  height: 40px; 
+  width: auto;
+  display: block;
+
+}
+
+/* 메뉴 */
+.menu {
+  display: flex;
+  gap: clamp(12px, 5vw, 60px);
+}
+.menu a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #fff; 
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+.menu a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 헤더(목업 이미지+글씨) */
+.hero {
+  min-height: calc(115vh - var(--nav-h));
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #000000 0%,
+    #0c0c0c 30%,
+    #191919 100%
+  );
+  color: #fff;
+}
+
+.bg-word {
+  position: absolute;
+  top: 20%;
+  left: 52%;
+  transform: translate(-50%, -50%) scaleY(1.3) skewX(-10deg);
+  margin: 0;
+  text-align: center;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 0.8;
+  font-size: clamp(140px, 26vw, 600px);
+  width: 120vw;
+  background: linear-gradient(90deg, #00fbff, #00ffb3, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  opacity: 1;
+  user-select: none;
+}
+
+.bg-word .first-line {
+  display: block;
+  transform: translateX(-20vw);
+}
+
+.hero .mock {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(120px);
+}
+
+  .mock{
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .mock img{
+    width: auto;
+    height: auto;
+    max-width: min(100vw, 720px);
+    max-height: calc(100vh - var(--nav-h) - 120px);
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(24px) scale(.96);
+      --float-ampl: 30px;
+  --float-speed: 4.0s;
+  }
+
+.mock.show img{
+  animation:
+    pop-in 700ms cubic-bezier(.2,.9,.2,1) 0s both,
+    float-bob var(--float-speed) ease-in-out .9s infinite;
+}
+
+html { scroll-behavior: smooth; }
+
+.wrap{
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 64px);
+  text-align: left;
+}
+
+.overview{
+  border-top: 1px solid rgba(0,0,0,.08);
+  min-height: clamp(300px, 52vh, 560px);
+  display: flex; align-items: center;
+    background: #191919;
+  color: #fff;
+}
+
+.overview .eyebrow{
+  margin: 0 0 17px;
+  font-size: 17px; font-weight: 500; letter-spacing: .06em; color: #00ffff;
+}
+.overview .title-lg{
+  margin: 0 0 25px;
+  font-weight: 600; line-height: 1;
+  font-size: clamp(26px, 5.4vw, 50px);
+ background: linear-gradient(90deg, #00ffaa 0%, #00fff2 50%, #2f00ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  background-clip: text;
+  color: transparent;
+}
+
+.overview .desc{
+  margin: 0;
+  font-size: clamp(16px, 1.8vw, 20px);
+  color: #ffffff;
+  opacity: .85;
+  white-space: pre-line;
+  line-height: 1.5;
+  letter-spacing: -0.001em;
+}
+
+:root{ --bg-dark:#191919; }
+
+
+.full-image{
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+  background: var(--bg-dark);
+}
+
+.full-image img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit: cover; object-position: center;
+  display:block;
+}
+
+.full-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 15, 15, 1) 0%,
+    rgba(20, 20, 20, 0.85) 10%,
+    rgba(25, 25, 25, 0.6) 25%,
+    rgba(25, 25, 25, 0.3) 45%,
+    rgba(25, 25, 25, 0) 65%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+
+.full-image::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 70, 100, 0.35) 75%,
+    rgba(0, 187, 220, 0.55) 90%,
+    rgba(0, 195, 255, 0.8) 100%
+  );
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  pointer-events:none; z-index:1;
+}
+
+.text-box {
+  position: absolute;
+  z-index: 2;
+  
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  padding: 20px 28px;
+  border-radius: 14px;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.7;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 800ms ease-out, transform 800ms ease-out;
+}
+
+.text-box.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.text-box.box1 {
+  top: 15%;
+  left: 10%;
+  max-width: 400px;
+}
+
+.text-box.box2 {
+  top: 45%;
+  right: 8%;
+  max-width: 420px;
+}
+
+.text-box.box3 {
+  bottom: 12%;
+  left: 25%;
+max-width: 580px;
+}
+
+/* ============================================= */
+/* 비디오*/
+/* ============================================= */
+
+.video-head{
+  background:#000000;
+  text-align:center;
+  padding: clamp(40px, 8vh, 96px) 0 clamp(40px, 8vh, 96px);
+}
+
+.video-title{
+  margin: 0 0 24px;
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #00e5ff 0%, #00ffa2 50%, #2f00ff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; color: transparent;
+}
+.video-subtitle{
+  margin: 0;
+  font-size: clamp(20px, 2.6vw, 38px);
+  font-weight: 600; line-height: 1.3;
+  background: linear-gradient(90deg, #00e5ff 0%, #00ffa2 50%, #2f00ff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; color: transparent;
+}
+
+.video{
+  position: relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  background:#000;
+}
+.video-wrap{ position:relative; width:100%; height:100%; }
+.video-wrap video{
+  position:absolute; top:50%; left:50%;
+  width:100vw; height:100vh; object-fit:cover;
+  transform:translate(-50%,-50%);
+}
+.video-wrap .play{
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  z-index:2; width:100px; height:100px;
+  background:rgba(255,255,255,.2);
+  border:2px solid rgba(255,255,255,.6);
+  border-radius:50%;
+  transition:all .2s ease;
+}
+.video-wrap .play:hover{ background:rgba(255,255,255,.4); transform:translate(-50%,-50%) scale(1.1); }
+.video-wrap .play::before{
+  content:""; display:block; width:60px; height:60px; margin-left:14px;
+  background:#fff; clip-path:polygon(25% 15%, 85% 50%, 25% 85%);
+}
+
+/* ============================================= */
+/* 텍스트힙 갤러리 */
+/* ============================================= */
+
+
+.background {
+  background: #121212;
+  color: #fff;
+  padding: clamp(80px, 10vh, 140px) 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.background .wrap {
+  text-align: center;
+}
+.background .eyebrow {
+  margin: 0 0 10px;
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #00e5ff 0%, #00ffa2 50%, #2f00ff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; color: transparent;
+}
+
+
+.background .title-lg {
+  margin: 0 0 16px;
+  font-size: clamp(20px, 2.6vw, 38px);
+  font-weight: 600;
+  line-height: 1.3;
+  background: linear-gradient(90deg, #00e5ff 0%, #00ffa2 50%, #0080ff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; color: transparent;
+}
+.background .desc {
+  color: #ffffff8c;
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.6;
+}
+
+.background .image-gallery {
+  position: relative;
+  width: min(95vw, 1100px);
+  height: auto;
+  min-height: clamp(400px, 60vh, 600px);
+  margin: clamp(60px, 8vh, 100px) auto 0;
+}
+
+.background .image-item {
+  position: absolute;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.background .image-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.background .image-item.reveal-img.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.background .item-1 {
+  top: 0%;
+  left: -26%;
+  width: 55%;
+  z-index: 2;
+}
+
+.background .item-2 {
+  top: 10%;
+  left: 35%;
+  width: 38%;
+  z-index: 2;
+  transform: translateY(40px);
+}
+.background .item-3 {
+  top: 28%;
+  left: 40%;
+  width: 45%;
+  z-index: 3;
+  transform: translateY(60px);
+}
+.background .item-4 {
+  top: -2%;
+  right: -16%;
+  width: 42%;
+  z-index: 4;
+  transform: translateY(20px);
+}
+
+.background .item-2.reveal-img.in {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================= */
+/* 경쟁사 분석*/
+/* ============================================= */
+
+.image-reveal {
+  background: #121212;
+  color: #000;
+  padding: clamp(100px, 12vh, 180px) 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+.image-reveal .wrap {
+  max-width: none;
+  width: 100%;
+  text-align: center;
+}
+
+.image-reveal .eyebrow {
+  margin: 0 0 10px;
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #00e5ff 0%, #00ffa2 50%, #2f00ff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; color: transparent;
+}
+
+
+.image-reveal .title-lg {
+  margin: 0 0 40px;
+  font-size: clamp(20px, 2.6vw, 38px);
+  font-weight: 600;
+  line-height: 1.3;
+  background: linear-gradient(90deg, #00e5ff 0%, #00ffa2 50%, #0080ff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; color: transparent;
+}
+.image-reveal .desc {
+    margin-bottom: 55px;
+  color: #ffffff8c;
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.6;
+}
+
+.image-reveal figure {
+  position: relative;
+  left: 0;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: none !important;
+  margin: 0 auto;
+}
+
+.image-reveal img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(70px);
+  will-change: transform, opacity;
+}
+
+.reveal.in {
+  animation: rise-in 1200ms cubic-bezier(.22,.9,.2,1) both;
+}
+
+
+.wavy-gradient-section {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background-color: #00e0b7;
+}
+
+.wavy-gradient-section .wavy-content {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 로고/타이틀 중앙 */
+  justify-content: center;
+  text-align: center;
+}
+
+
+.wavy-gradient-section .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.wavy-gradient-section::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  
+ background: linear-gradient(
+    75deg,
+    #009dff,
+    #00eeff,
+    #00ff7b,
+    #d3ffe3
+  );
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  
+  animation: wavyBackground 5s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes wavyBackground {
+  0% {
+    transform: translate(0%, 0%) rotate(0deg);
+    background-position: 0% 0%;
+  }
+  25% {
+    transform: translate(-10%, 15%) rotate(8deg);
+    background-position: 25% 25%;
+  }
+  50% {
+    transform: translate(10%, -10%) rotate(-8deg);
+    background-position: 75% 50%;
+  }
+  75% {
+    transform: translate(-15%, -5%) rotate(5deg);
+    background-position: 50% 75%;
+  }
+  100% {
+    transform: translate(0%, 0%) rotate(0deg);
+    background-position: 0% 0%;
+  }
+}
+.logo img {
+  width: 180px;
+  height: 180px;
+}
+
+.my-page-section .content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.main-title {
+  margin-top: 28px;
+  margin-bottom: 20px;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 750;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.72);
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+.persona-section {
+  background-color: #121212;
+  padding: 200px 20px;
+  text-align: center;
+  color: white;
+}
+.section-header {
+  margin-bottom: 270px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+.section-header.animate-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.persona-tag { color: #888; letter-spacing: 1px; }
+.section-title { font-size: 36px; line-height: 1.4; }
+.persona-cards-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.persona-card {
+  background-color: #222;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 50px;
+  max-width: 480px;
+  min-width: 320px;
+  flex: 1;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  min-height: 650px;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.profile-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 30px;
+  border: 4px solid #00e0b7;
+}
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.name {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.age-gender {
+  color: #aaa;
+  margin-bottom: 25px;
+}
+.job {
+  font-size: 20px;
+  color: #ddd;
+  margin-bottom: 45px;
+}
+.description {
+  font-size: 16px;
+  color: #ccc;
+  line-height: 1.7;
+  text-align: left;
+  
+}
+.persona-card.animate-visible {
+  opacity: 1;
+  box-shadow: 0 0 15px rgba(0, 255, 162, 0.4), 0 0 30px rgba(0, 229, 255, 0.3);
+  animation: pulse-glow 3s infinite alternate;
+}
+
+.persona-card.left.animate-visible {
+  transform: translate(-25%, -10%);
+}
+
+.persona-card.right.animate-visible {
+  transform: translate(25%, 25%);
+}
+
+.persona-card.left { transition-delay: 0.2s; }
+.persona-card.right { transition-delay: 0.5s; }
+
+.persona-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  transform: translateX(-100%);
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  animation: shimmer 4s infinite;
+  animation-delay: 1.5s;
+}
+
+
+/* ============================================= */
+/* 아래 코드를 기존 CSS 마지막에 추가하세요. */
+/* ============================================= */
+
+.needs-section {
+  padding: clamp(100px, 15vh, 200px) 20px;
+  min-height: 600px; /* 최소 높이를 주어 콘텐츠가 잘 보이도록 함 */
+  display: flex; /* 내부 콘텐츠를 정렬하기 위해 flex 사용 */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+    position: relative;
+  overflow: visible;
+}
+
+.needs-content {
+  position: relative; 
+  z-index: 1; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px; /* 요소 사이의 간격 */
+}
+
+.needs-title {
+  font-size: clamp(24px, 3.2vw, 42px);
+  font-weight: 600;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.needs-title .needs-highlight {
+  /* '니즈' 텍스트에 하이라이트 효과 */
+  background: linear-gradient(90deg, #00e5ff, #00ffaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.needs-desc {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: -10px; /* 제목과의 간격조정 */
+}
+
+.needs-icon img {
+  width: clamp(50px, 6vw, 72px);
+  opacity: 0.8;
+}
+
+
+/* 언덕(반원) 영역: 이 박스에 '반원 마스크'만 적용 */
+.needs-bg-arc{
+  --disc-size: 1200px;      /* 회전하는 원 지름 */
+  --arc-height: 460px;      /* 언덕 높이(보이는 두께) */
+  --arc-bottom: -10px;     /* 섹션 기준 언덕 위치(아래로 내리기) */
+
+  position: absolute;
+  left: 50%;
+  bottom: var(--arc-bottom);
+  transform: translateX(-50%);
+  width: 160%;
+  max-width: 1900px;
+  height: var(--arc-height);
+  z-index: 0;
+
+  /* 언덕 배경(밑색) */
+  background: linear-gradient(180deg, #0b2a2c 0%, #0a2021 100%);
+
+  /* 반원'으로만 보이게 마스크 */  -webkit-mask: radial-gradient(120% 118% at 50% 135%, #000 50.5%, transparent 51.5%);
+          mask: radial-gradient(120% 118% at 50% 135%, #000 50.5%, transparent 51.5%);
+
+  overflow: hidden; /* 디스크가 튀어나와도 언덕 밖은 숨김 */
+}
+
+/* 회전하는 '원(디스크)' 자체 */
+.needs-bg-arc::before{
+  content:"";
+  position: absolute;
+
+  /* 디스크의 중심을 언덕 박스의 바닥선 아래에 둠(언덕은 윗부분만 보임) */
+  left: 50%;
+  top: 100%;
+
+  width: var(--disc-size);
+  height: var(--disc-size);
+  border-radius: 50%;
+  
+  /* ✔️ 디스크 자체의 텍스처(회전 시 변화가 느껴지도록 약간 비대칭 패턴) */
+  background:
+    radial-gradient(circle at 50% 45%, rgba(0,255,230,.35), rgba(0,255,230,0) 55%),
+    conic-gradient(from 0deg,
+      rgba(0,255,220,.20) 0deg,
+      rgba(0,255,220,.05) 40deg,
+      transparent 80deg,
+      rgba(0,255,220,.16) 160deg,
+      rgba(0,255,220,.04) 220deg,
+      transparent 300deg,
+      rgba(0,255,220,.20) 360deg);
+  filter: blur(40px);
+  opacity:.65;
+
+  /* 디스크를 자기 '중심' 기준으로 회전시키되, 위치 고정 */
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: 50% 50%;
+
+  /* 디스크만 회전 (언덕 마스크는 부모에 적용되어 있음) */
+  animation: disc-spin 18s linear infinite;
+}
+
+/* 원(디스크) 자체 회전 */
+@keyframes disc-spin{
+  to{ transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+/* ============================================= */
+/* 니즈123카드섹션 */
+/* ============================================= */
+
+.needs-flow-section {
+  background-color: #121212;
+  padding: 130px 0; /* --- 수정: 위아래 여백 증가 --- */
+  
+}
+
+.needs-flow-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.needs-flow-track {
+  display: flex;
+  gap: 50px; 
+  animation: scroll-left 30s linear infinite; 
+}
+
+.needs-flow-track:hover {
+  animation-play-state: paused;
+}
+
+.need-card {
+  flex-shrink: 0;
+  width: 490px;
+  background-color: #1f1f1f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px; 
+  padding: 45px 36px; 
+}
+
+.need-card .card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* --- 아이콘과 제목 사이 간격 --- */
+  margin-bottom: 24px; /* --- 헤더와 본문 사이 간격 --- */
+}
+
+.need-card .card-circle {
+  width: 40px; /* --- 원 크기 증가 --- */
+  height: 40px; /* ---  원 크기 증가 --- */
+  border-radius: 50%;
+}
+
+.need-card:nth-child(3n + 1) .card-circle { background-color: #3b82f6; }
+.need-card:nth-child(3n + 2) .card-circle { background-color: #84cc16; }
+.need-card:nth-child(3n + 3) .card-circle { background-color: #3b82f6; }
+
+.need-card .card-title {
+  font-size: 22px; /* --- 제목 글자 크기 --- */
+  font-weight: 600;
+  color: #e5e5e5;
+  margin: 0;
+}
+
+.need-card .card-desc {
+  font-size: 18px; /* --- 본문 글자 크기 증가 --- */
+  color: #a3a3a3;
+  line-height: 1.7; /* ---  줄 간격 조정 --- */
+  margin: 0;
+}
+
+.goal-section {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f0f0f;
+  color: #fff;
+}
+
+
+/* 이미지 래퍼 */
+.image-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* 기본적으로 어둡게 */
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(40%);
+  transition: filter 0.8s ease, transform 1.2s ease;
+}
+
+/* 마우스를 올리면 밝아지고 살짝 확대 */
+.image-wrapper:hover img {
+  filter: brightness(90%);
+  transform: scale(1.05);
+}
+
+/* 텍스트 중앙 배치 */
+.text-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.text-content .eyebrow {
+  color: #00ff99;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.text-content h2 {
+  font-size: clamp(20px, 3vw, 36px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.4;
+}
+
+/* ============================================= */
+/* 서비스제공애니메이샨 */
+/* ============================================= */
+
+.service-features-section {
+  background-color: #121212;
+  padding: clamp(100px, 12vh, 160px) 20px;
+  
+}
+
+.features-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  gap: 100px;
+  text-align: center;
+}
+
+.feature-item {
+  flex: 1;
+  min-width: 280px;
+  max-width: 320px;
+}
+
+.feature-item h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2dd4bf; /* 에메랄드 색상 */
+  margin-bottom: 12px;
+}
+
+.feature-item p {
+  font-size: 16px;
+  color: #a3a3a3;
+  line-height: 1.7;
+  min-height: 70px; /* 설명 텍스트 높이를 비슷하게 */
+}
+
+.feature-visual {
+  height: 200px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+/* --- 그래프 바 애니메이션 --- */
+#record-visual {
+  align-items: flex-end; 
+  gap: 15px;
+}
+.bar {
+  width: 25px;
+  border-radius: 5px;
+  background: linear-gradient(to top, #2dd4bf, #059669);
+  animation: bar-pulse 2.5s ease-in-out infinite;
+}
+
+.bar:nth-child(1) { height: 60%; animation-delay: -0.2s; }
+.bar:nth-child(2) { height: 95%; animation-delay: -1.5s; }
+.bar:nth-child(3) { height: 75%; animation-delay: -0.8s; }
+.bar:nth-child(4) { height: 40%; animation-delay: -2.0s; }
+
+@keyframes bar-pulse {
+  50% { height: 20%; }
+}
+
+#connect-visual{
+  position: relative;
+  width: 180px; 
+  height: 220px;  
+  margin: 0 auto;
+  overflow: visible;        /* 살짝 튀어나와도 자연스럽게 */
+  transform-style: preserve-3d; /* 깊이감용 */
+}
+.float-heart {
+  position: absolute;
+  bottom: 0;
+  left: var(--x, 50%);
+  transform: translate(-50%, 0) scale(1);
+  font-size: var(--size, 38px); 
+  line-height: 1;
+  color: var(--col, #ff5f9f);   
+  opacity: 0;
+  text-shadow: 0 0 10px rgba(255, 100, 180, 0.6); /* 🔆 발광 느낌 */
+  filter: drop-shadow(0 4px 10px rgba(255, 90, 180, 0.4));
+  animation: riseFade var(--dur, 5s) ease-out forwards;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+@keyframes riseFade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 30px) scale(1.2);
+    filter: blur(0);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1.1);
+  }
+  70% {
+    opacity: 0.95;
+    transform: translate(-50%, -140px) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -250px) scale(0.75); /* 🔼 더 멀리 올라가며 작아짐 */
+    filter: blur(1px);
+  }
+}
+/* 모션 민감 사용자 배려 */
+@media (prefers-reduced-motion: reduce){
+  .float-heart{ animation: none; opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+
+.badge-svg-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.badge-svg {
+  width: 240px;      /* 필요 시 조절 가능 */
+  height: auto;
+  display: block;
+}/* =======================================
+   프로모션 레코드 섹션 (하트 파동)
+   ======================================= */
+
+.promo-record-section {
+  position: relative;
+  background-color: #101211; /* 매우 어두운 배경 */
+  color: white;
+  padding: clamp(100px, 15vh, 160px) 0;
+  overflow: hidden; /* 애니메이션이 섹션 밖으로 나가지 않게 */
+  min-height: 90vh; /* 섹션의 최소 높이 확보 */
+}
+
+/* 텍스트/콘텐츠가 올라갈 컨테이너 */
+.promo-record-section .promo-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 10; /* 콘텐츠가 애니메이션보다 위에 오도록 */
+}
+
+/* 왼쪽: 큼직한 타이틀 */
+.promo-record-section .promo-title h2 {
+  font-size: clamp(48px, 8vw, 90px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin: 0;
+}
+
+.promo-record-section .promo-title span {
+  /* "My Record" 부분은 다른 색으로 */
+  color: #3CFF78; /* 이미지의 밝은 녹색 */
+}
+
+/* ----------------------------------
+   1. 배경의 큰 원형 파동 (Ripples)
+   ---------------------------------- */
+.hearts-stack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* 콘텐츠(10)보다는 뒤에 */
+}
+
+.heart-field {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* 원형 파동(버블) 스타일 */
+.heart-bubble {
+  position: absolute;
+  top: 150%; /* 중앙에서 시작 */
+  border-radius: 50%;
+  /* ... (이하 생략) ... */
+
+  /* 이미지의 초록색을 약하게 사용 */
+  background: rgba(60, 255, 120, 0.05); 
+  border: 1px solid rgba(60, 255, 120, 0.1);
+
+  /* 애니메이션 적용 */
+  animation: pulse-bubble 7s cubic-bezier(.2,.8,.5,1) infinite;
+  animation-delay: var(--delay, 0s); /* HTML의 --delay 값으로 시작 시간 조절 */
+  
+  /* 애니메이션 시작 전 상태 */
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+}
+
+/* 파동(버블) 크기별 스타일 */
+.heart-bubble.size-lg { width: 60vw; height: 60vw; }
+.heart-bubble.size-md { width: 40vw; height: 40vw; }
+.heart-bubble.size-sm { width: 20vw; height: 20vw; }
+
+/* 원형 파동 애니메이션 */
+@keyframes pulse-bubble {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
+
+/* ----------------------------------
+   2. 작고 밝은 하트
+   ---------------------------------- */
+.heart-wrap.small {
+  position: absolute;
+  top: 20%;
+  left: 95%;
+  z-index: 11; /* 콘텐츠보다도 위에 */
+  
+}
+
+
+
+/* 하트의 빛나는 중심부 */
+.heart-core {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background-color: #3CFF78; /* 밝은 녹색 */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* 빛나는 네온 효과 및 깜빡임 */
+  box-shadow: 0 0 3px #3CFF78, 0 0 4px #3CFF78, 0 0 px #3CFF78;
+  animation: pulse-core 2s ease-in-out infinite alternate;
+}
+
+/* SVG 하트 아이콘 스타일 */
+.heart-icon {
+  width: 24px;
+  height: 24px;
+  color: #101211;
+}
+
+/* 하트 중심부 깜빡임 애니메이션 */
+@keyframes pulse-core {
+  from { transform: scale(0.95); opacity: 0.9; }
+  to { transform: scale(1.05); opacity: 1; }
+}
+
+/* 하트 주변의 동심원(링) */
+.ring {
+    background: rgba(60, 255, 118, 0.15);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  opacity: 0;
+  
+  /* 퍼져나가는 애니메이션 */
+  animation: expand-ring 3s ease-out infinite;
+}
+
+/* 링 시간차 적용 */
+.ring.r1 {
+  animation-delay: 0s;
+}
+.ring.r2 {
+  animation-delay: 1.5s;
+}
+
+/* 링 확장 애니메이션 */
+@keyframes expand-ring {
+  0% {
+    width: 40px; /* .heart-core와 동일한 크기 */
+    height: 40px;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    width: 120px; /* 확장될 크기 */
+    height: 120px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
+/* 큰 하트 (기존 small보다 크고, 약간 아래쪽) */
+.heart-wrap.big {
+    
+  position: absolute;
+  top: 40%;       
+  left: 68%;      
+  z-index: 10;    /* small보다 살짝 아래 (깊이감) */
+  animation: float-heart-big 10s ease-in-out infinite alternate;
+}
+
+/* 커지는 애니메이션 */
+@keyframes float-heart-big {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(25px, -20px) scale(1.08); }
+}
+
+/* 큰 하트 중심부 */
+.heart-wrap.big .heart-core {
+  width: 80px;  /* 🔼 기존 40 → 80 */
+  height: 80px;
+  background-color: #3CFF78;
+  box-shadow:
+    0 0 4px #3CFF78,
+    0 0 6px #3CFF78,
+    0 0 8px #3CFF78;
+}
+
+/* 큰 하트 아이콘 */
+.heart-wrap.big .heart-icon {
+  width: 40px;
+  height: 40px;
+  color: #101211;
+}
+
+/* 큰 하트 링은 더 크게 확장 */
+.heart-wrap.big .ring {
+  animation: expand-ring-big 3.4s ease-out infinite;
+}
+.heart-wrap.big .ring.r2 {
+  animation-delay: 1.7s;
+}
+
+@keyframes expand-ring-big {
+  0% {
+    width: 80px;
+    height: 80px;
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+}
+
+/* ============================================= */
+/* (수정) 유저 플로우 섹션 CSS - 꽉 찬 버전    */
+/* ============================================= */
+
+.user-flow-section {
+  background-color: #121212;
+  padding: clamp(100px, 12vh, 160px) 20px;
+  text-align: center; /* 전체 중앙정렬 */
+  overflow-x: hidden;
+}
+
+/* 내부 wrap도 중앙정렬 유지 */
+.user-flow-section .wrap {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* 소제목(eyebrow) */
+.user-flow-section .eyebrow {
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  color: #a3a3a3;
+  margin: 0 auto 12px; /* 위아래 간격만 */
+}
+
+/* 큰 제목(title) */
+.user-flow-section .title-lg {
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  color: #ffffff;
+  margin: 0 auto clamp(40px, 6vw, 80px); /* 가운데 정렬 + 여백 */
+  display: inline-block; /* 텍스트 크기만큼만 */
+  text-align: center;
+}
+
+/* 플로우 차트 그림 */
+.flow-chart-figure {
+  width: 90vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: none;
+  margin: 0 auto;
+}
+
+.flow-chart-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;
+  border: none;
+}
+
+/* ============================================= */
+/* 디자인 시스템 섹션 CSS                       */
+/* ============================================= */
+.design-system-section {
+  background-color: #121212;
+  padding: clamp(50px, 6vh, 80px) 10px;
+  text-align: center; /* 전체 중앙정렬 */
+}
+
+.design-system-section .wrap {
+  max-width: 1600px;  /* 가운데 폭 고정 */
+  margin: 0 auto;     /* 진짜 중앙정렬 */
+  text-align: center;
+  padding: 0 clamp(4vw, 60px, 80px);
+}
+
+/* 제목 부분 (위 텍스트들) */
+.design-system-section .eyebrow,
+.design-system-section .title-lg {
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  color: #fff;
+  text-align: center; /* 중앙 정렬 */
+}
+
+.design-system-section .eyebrow {
+  color: #a3a3a3;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.design-system-section .title-lg {
+  margin-bottom: clamp(40px, 6vw, 80px);
+}
+
+/* 디자인 그리드 */
+.design-content-grid {
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: clamp(30px, 5vw, 60px);
+  max-width: 1200px; /* 너무 넓게 퍼지지 않게 */
+  margin: 0 auto; /* 가운데 배치 */
+}
+
+/* 각 컬럼 공통 */
+.design-column {
+  flex: 1 1 300px;
+  min-width: 280px;
+  text-align: center; /* 내용도 중앙정렬 */
+}
+
+/* 오른쪽 컬럼이 2배 넓게 */
+.design-column.details-column {
+  flex: 2 1 500px;
+}
+
+/* 소제목 */
+.design-column h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #888;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+
+/* 🎯 Color 제목을 팔레트의 정중앙에 정렬 */
+.design-column h3:has(+ .color-palette) {
+  display: flex;
+  justify-content: center; /* 팔레트의 중앙과 같은 정렬 기준 */
+  margin-left: -100px;
+  margin-bottom: 20px;
+  text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+
+
+/* 색상 팔레트 */
+.color-swatch {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+.color-box {
+  border: 2px solid rgba(255, 255, 255, 0.1); /* 살짝 밝은 테두리 */
+  backdrop-filter: blur(2px);
+  width: clamp(240px, 28vw, 360px); 
+  height: clamp(120px, 14vw, 180px);
+  border-radius: 24px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.color-box:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+}
+
+.color-main-bg { background-color: #121212;  }
+.color-primary { background-color: #5bc6fa; }
+.color-secondary { background-color: #75fb83; }
+.hex-code { font-size: 15px; color: #ccc; }
+
+/* 키워드 */
+.design-keywords {margin-top: clamp(40px, 6vh, 80px); margin-bottom: 50px; }
+.keyword-tags { display: flex; gap: 16px; flex-wrap: wrap; }
+.keyword-tag {
+  background-color: #222;
+  color: #eee;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* 타이포그래피 */
+.font-group { margin-bottom: 30px; }
+.font-specimen {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 20px 0;
+  border-bottom: 1px solid #2a2a2a;
+}
+.font-specimen p {
+  margin: 0;
+  font-size: 22px;
+  color: #fff;
+}
+.font-specimen span {
+  font-size: 14px;
+  color: #888;
+}
+/* 폰트 종류별 스타일 */
+.font-helvetica { font-family: 'Helvetica', Arial, sans-serif; }
+
+.font-noto {
+  font-family: "SUIT", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+}
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+.font-regular { font-weight: 400; }
+
+/* 스크롤 등장 애니메이션 */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.reveal-item.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* 오른쪽 열이 0.2초 늦게 나타나도록 설정 */
+.design-column.details-column.reveal-item {
+  transition-delay: 0.2s;
+}
+
+
+/* ============================================= */
+/* 앱 아이덴티티 섹션 CSS                        */
+/* ============================================= */
+/* 1) 두 칸 그리드로 고정 */
+.pair-photos{
+  width: 100%;                      /* 화면 가득 */
+  max-width: 1400px;                /* 내용 최대폭(원하면 조절) */
+  margin: 0 auto;                   /* 가운데 배치 */
+  padding: clamp(40px, 6vw, 80px) 20px; /* 위아래 여백 */
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 6vw, 80px);
+
+  background: #121212;     /* ✅ 완전 블랙으로 고정 */
+}
+
+
+
+
+/* 2) 프레임 자체를 '완전 동일 크기'로 강제  */
+.photo-frame{
+  --W: 600px;
+  --H: 600px;
+  width: var(--W);
+  height: var(--H);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 0;
+  background: #121212;                 /* ✅ 프레임 내부도 블랙 */
+  box-sizing: border-box;
+}
+
+/* 3) 이미지가 프레임을 '꽉 채우도록' 잘라서 맞춤 */
+.photo-frame img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;     /* baseline 문제 제거 */
+}
+
+/* 4) 모바일에서는 세로 스택 + 같은 비율 유지 */
+@media (max-width: 820px){
+  .pair-photos{ grid-template-columns: 1fr; }
+  .photo-frame{
+    width: 100%;
+    height: auto;
+    aspect-ratio: 6 / 5; /* 600x500의 비율 유지 */
+  }
+}
+
+/* ============================================= */
+/*          CTA 섹션 CSS          */
+/* ============================================= */
+
+/* 섹션 기본 */
+
+.cta-section {
+  position: relative;
+  overflow: hidden;
+  background-color: #121212;
+  padding: clamp(80px, 12vh, 160px) 0;
+  color: white;
+}
+
+.background-arch {
+  position: absolute;
+  inset: 0;
+  z-index: 0; /* 맨 뒤 */
+  pointer-events: none;
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2; /* ✅ 글씨와 목업이 앞으로! */
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.background-arch {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+}
+
+.background-arch::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(-55vw);
+  width: 140vw;
+  height: 140vw;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  
+  background: radial-gradient(
+    circle at 50% 60%,
+ rgba(33, 80, 83, 0.95) 0%,     /* 중앙: 깊은 청록 */
+    rgba(25, 90, 94, 0.9) 35%,     /* 중간: 살짝 밝은 청록 */
+    rgba(50, 130, 140, 0.8) 80%,   /* 하단: 더 밝은 청록빛 */
+    rgba(34, 233, 255, 0.916) 100%      /* 완전 투명으로 페이드 */
+  );
+
+  box-shadow: 0 -100px 250px rgba(0, 0, 0, 0.7) inset;
+  z-index: 0;
+  opacity: 0.95;
+}
+
+.background-arch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.5) 20%,
+    rgba(0, 0, 0, 0) 50%
+  );
+}
+
+
+
+
+/* 상단 텍스트 */
+.cta-header {
+  margin-bottom: clamp(60px, 20vh, 180px);
+}
+
+.cta-section .eyebrow {
+  color: #a3a3a3;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cta-title {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 600;
+  line-height: 1.3;
+  color: #fff;
+}
+/* 제목의 'BOUTINE' 부분만 그라데이션 적용 */
+.cta-title::first-line {
+  background: linear-gradient(90deg, #5bc6fa, #75fb83);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+
+/* 앱 목업 이미지 */
+.mockup-container{
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;            /* 블록 가운데 */
+  display: flex;             /* 확실한 가운데 정렬 */
+  justify-content: center;
+  align-items: center;
+}
+
+
+.mockup-image{
+
+  animation: gentle-float 2.5s ease-in-out infinite;
+      opacity: 0;
+  transition: opacity .9s ease-out;
+  will-change: opacity;
+  display: block;            /* 인라인 간격 제거 */
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  position: relative;
+  left: auto; right: auto;   /* 혹시 남아있던 위치 지정 해제 */
+  transform: none;           /* 예전 transform 초기화 */
+}
+.mockup-image.is-visible {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mockup-image {
+    transition: none;
+  }
+}
+
+
+
+/* 하단 로고 */
+.cta-logo {
+  font-size: clamp(100px, 20vw, 250px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  background: linear-gradient(90deg, #5bc6fa, #75fb83);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+
+  display: inline-block;
+  transform: translateY(-200px); /* 👈 위로 80px 이동 (값 조절 가능) */
+}
+
+
+
+/* ============================================= */
+/* 기능 쇼케이스 섹션 (전체 섹션 기본 스타일)    */
+/* ============================================= */
+.feature-showcase-section {
+  background-color: #121212;
+  padding: clamp(120px, 18vh, 200px) 20px;
+}
+
+.feature-showcase-section .wrap {
+  max-width: 960px;   /* ✅ image-reveal 섹션과 동일 폭 */
+  margin: 0 auto;
+  text-align: center;  /* ✅ 중앙 정렬 */
+}
+
+/* 소제목 (eyebrow) */
+.feature-showcase-section .eyebrow {
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #75fb83;  /* image-reveal 스타일 톤 맞춤 */
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* 큰 제목 */
+.feature-showcase-section .title-lg {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 0 0 24px;
+  letter-spacing: -0.02em;
+
+  /* ✨ 진짜 그라데이션 텍스트 적용 */
+  background: linear-gradient(90deg, #00e5ff 0%, #00ffa2 50%, #0080ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+
+/* 설명문 */
+.feature-showcase-section .desc {
+  color: #a3a3a3;
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+
+/* ============================================= */
+/* 목업 + 이미지 2열 (showcase-duo)               */
+/* ============================================= */
+.showcase-duo {
+    
+  --mock-w: 340px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+  justify-items: center;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.showcase-duo .duo-left,
+.showcase-duo .duo-right {
+  width: var(--mock-w);
+  margin-top: clamp(60px, 12vh, 160px);
+}
+
+
+
+/* 오른쪽 오프셋 */
+.showcase-duo .duo-right {
+  margin-top: 600px;
+}
+
+/* 공통 크기 통일 */
+.showcase-duo .vm-phone,
+.showcase-duo .showcase-image-wrapper {
+  width: var(--mock-w);
+}
+
+/* 반응형: 모바일에서 세로 배치 */
+@media (max-width: 900px){
+  .showcase-duo {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .showcase-duo .duo-right {
+    margin-top: 0;
+  }
+  .showcase-duo .duo-left,
+  .showcase-duo .duo-right,
+  .showcase-duo .vm-phone,
+  .showcase-duo .showcase-image-wrapper {
+    width: min(92vw, 420px);
+  }
+}
+
+/* ============================================= */
+/* 목업 프레임 (vm-phone)                         */
+/* ============================================= */
+.vm-phone {
+  position: relative;
+  display: inline-block;
+}
+
+.vm-frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  position: relative;
+  z-index: 2;
+}
+
+.vm-screen {
+  position: absolute;
+  top: 6.4%;
+  left: 7.4%;
+  width: 85.3%;
+  height: 87.5%;
+  overflow: hidden;
+  border-radius: 36px;
+  z-index: 1;
+}
+
+.vm-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 부모가 기준점이 되도록 */
+.showcase-duo .duo-right {
+  position: relative;
+  overflow: visible;
+}
+
+/* 라벨 전체 레이어 */
+.callouts {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* 공통 스타일 */
+.label-line {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #b8c6d9;
+  letter-spacing: 0.02em;
+}
+
+/* 점선 */
+.label-line::after {
+  content: "";
+  flex: 1;
+  height: 1.5px;
+  background-image: linear-gradient(to right, #42c3ff 33%, transparent 33%);
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+}
+
+/* 파란 점 */
+.label-line .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #42c3ff;
+  flex-shrink: 0;
+}
+.showcase-duo .duo-right .friends {
+  position: absolute;
+  top: 66%;
+  right: -140px;        /* 폰 밖으로 빼기 */
+  display: flex;
+  gap: 10px;
+  margin: 0; padding: 0;
+  list-style: none;
+  pointer-events: auto; /* 클릭 가능하게 하려면 */
+  z-index: 6;
+}
+.showcase-duo .duo-right .friends img {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+}
+/* 각각 위치 지정 (폰 주변에 배치) */
+.book-name-line { top: 6%;  left: -180px; width: 180px; }
+.my-page-line   { top: 9%; right: -180px; width: 180px; flex-direction: row-reverse; text-align: right; }
+.my-record-line { top: 88%; left: -180px; width: 180px; }
+.friends-line   { top: 87%; right: -180px; width: 180px; flex-direction: row-reverse; text-align: right; }
+.time-line      { top: 82%; left: -180px; width: 180px; }
+.page-line      { top: 44%; right: -180px; width: 180px; flex-direction: row-reverse; text-align: right; }
+
+@media (max-width: 1200px){
+  .label-line { font-size: 14px; }
+  .book-name-line,
+  .my-page-line,
+  .my-record-line,
+  .friends-line,
+  .time-line,
+  .page-line { left: -120px; right: -120px; width: 140px; }
+}
+
+
+/* 슬라이드 자체 폭을 고정해서 여러 장이 들어오게 */
+.reading-activities .mySwiper { width: 100%; overflow: visible; }
+.mySwiper .swiper-slide { 
+  width: clamp(260px, 26vw, 420px);  /* 카드 폭 */
+  flex-shrink: 0;
+}
+.mySwiper .swiper-slide img{
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+
+
+/* 독서 활동 섹션 전체 스타일 */
+.reading-activities {
+    padding: 60px 0; /* 섹션의 위아래 여백 */
+    background-color: #121212; 
+}
+
+/* 섹션 제목 스타일 */
+.section-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #ffffff; 
+}
+
+/* 캐러셀을 감싸는 div 스타일 (크기 및 중앙 정렬) */
+.carousel-wrapper {
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Swiper 슬라이드 이미지 스타일 */
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+}
+
+/* ============================================= */
+/* 리딩룸 (랭킹) 섹션 스타일              */
+/* ============================================= */
+
+.reading-room-section {
+    background-color: #121212; /* 어두운 배경 */
+    padding: clamp(100px, 15vh, 160px) 20px;
+    overflow: hidden; /* 섹션 밖으로 나가는 요소 숨김 */
+}
+/* .reading-room-section .container 수정 */
+.reading-room-section .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;     
+    gap: 60px;
+}
+
+/* .reading-room-section .text-content 수정 */
+.reading-room-section .text-content {
+    flex: 1;
+    max-width: 650px;
+    text-align: left; 
+    color: #fff;
+
+align-self: flex-start;
+margin-left: 50px;
+}
+
+.reading-room-section .eyebrow {
+    color: #75fb83; /* 포인트 녹색 */
+    font-weight: 500;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.reading-room-section .section-title {
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 24px;
+    text-align: left; 
+}
+
+.reading-room-section .description {
+    color: #a3a3a3;
+    line-height: 1.7;
+    font-size: clamp(15px, 1.2vw, 16px);
+}
+
+/* reading-activities 텍스트 블록을 reading-room과 동일하게 */
+.reading-activities .container{
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;   /* 위: 텍스트 / 아래: 캐러셀 */
+  align-items: flex-start;  /* 왼쪽 정렬 */
+  gap: 40px;
+}
+
+.reading-activities .text-content{
+  flex: 1;
+  max-width: 650px;
+  text-align: left;
+  color: #fff;
+  /* 필요하면 같은 느낌으로 살짝 왼쪽 당김 */
+  /* margin-left: -50px; */
+}
+
+.reading-activities .eyebrow{
+  color: #75fb83;
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.reading-activities .section-title{
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.reading-activities .description{
+  color: #a3a3a3;
+  line-height: 1.7;
+  font-size: clamp(15px, 1.2vw, 16px);
+}
+
+
+
+/* 2. 오른쪽 비주얼 콘텐츠 스타일 */
+.visual-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.mockups {
+    display: flex;
+    gap: 100px; 
+    transform: translateX(-70px); 
+}
+
+.mockup-img {
+    width: 320px; /* 이미지 크기는 그대로 유지 */
+    height: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border-radius: 24px;
+    
+}
+
+
+
+/* 랭킹 리스트 전체 래퍼 */
+.ranking-list-wrapper {
+    width: 420px; /* 전체 너비는 유지 */
+    /* background-color, padding, box-shadow 등은 제거하거나 주석 처리 */
+}
+
+/* 랭킹 리스트 <ol> 스타일 */
+/* 리스트 <ol> 스타일 수정 */
+.ranking-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: ranking-counter;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 12px; 
+}
+
+/* 랭킹 아이템 <li> 스타일 수정 */
+.ranking-item {
+    background-color: #242424; /* 아이템에 직접 배경색 적용 */
+    border-radius: 12px;       /* 모서리를 둥글게 */
+    padding: 12px 16px;        /* 내부 여백 적용 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* 은은한 그림자 효과 */
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* border-bottom: 1px solid #3a3a3a; */ 
+}
+
+.ranking-item:not(:last-child) {
+    border-bottom: 1px solid #3a3a3a;
+}
+
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info .username {
+    color: #fff;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.user-info .status {
+    color: #888;
+    font-size: 12px;
+}
+
+.progress-container {
+    flex-grow: 1; /* 남은 공간 모두 차지 */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #444;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+
+/* ✨ 3. JavaScript로 추가할 클래스: 실제 너비를 지정 */
+.progress.fill-progress {
+}
+.percentage {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 35px; /* % 숫자가 변해도 레이아웃이 밀리지 않게 */
+    text-align: right;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #555;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    
+    /* 아이콘 이미지 설정 */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 55%;
+}
+
+.icon-btn:hover {
+    background-color: #333;
+    border-color: #777;
+}
+
+.icon-btn.heart {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.icon-btn.plus {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='5' x2='12' y2='19'%3E%3C/line%3E%3Cline x1='5' y1='12' x2='19' y2='12'%3E%3C/line%3E%3C/svg%3E");
+}
+
+/* 진행바 채움 + 스트라이프 + 샤인 */
+.progress {
+  position: relative;
+  height: 100%;
+  background: linear-gradient(90deg, #5bc6fa, #75fb83);
+  border-radius: 3px;
+  overflow: hidden;
+  width: 0%; /* 시작은 0 */
+}
+
+/* 대각 스트라이프 레이어 */
+.progress::before{
+  content:"";
+  position:absolute; inset:0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,.25) 0 10px,
+    rgba(255,255,255,0) 10px 20px
+  );
+  mix-blend-mode: soft-light;
+  background-size: 28px 28px;
+  transform: translateZ(0);
+  will-change: background-position;
+  animation: progress-stripes 5.1s linear infinite;
+  opacity: .45;
+}
+
+/* 하이라이트 샤인 레이어 */
+.progress::after{
+  content:"";
+  position:absolute; inset:-40% -20% -40% -20%;
+  background: radial-gradient(circle at 0% 50%, rgba(255,255,255,.55), transparent 60%);
+  transform: translateX(-120%);
+  filter: blur(8px);
+  opacity: .55;
+  pointer-events: none;
+}
+
+.progress.run{
+  animation: progress-fill 5.4s cubic-bezier(.22,1,.36,1) forwards;
+}
+.progress.run::after{
+  animation: progress-shine 2.4s ease-out .05s forwards;
+}
+
+/* ============================================= */
+/* 마이페이지 & 뱃지 섹션 스타일          */
+/* ============================================= */
+
+.my-page-section {
+    background-color: #121212; /* 어두운 배경 */
+    padding: clamp(100px, 15vh, 160px) 20px;
+    position: relative; /* 배경 숫자들의 기준점 */
+    overflow: hidden;   /* 배경 숫자가 섹션을 벗어나지 않게 */
+}
+
+/* 1. 배경 숫자들 스타일 */
+.background-numbers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    user-select: none; /* 선택 안되게 */
+    pointer-events: none; /* 클릭 안되게 */
+
+    /* 둥실둥실 떠다니는 애니메이션 (선택 사항) */
+    animation: float-bob 6s ease-in-out infinite;
+}
+
+.bg-num {
+    position: absolute;
+    font-size: clamp(80px, 15vw, 200px);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.03); /* 매우 흐릿하게 */
+}
+
+/* 숫자들 위치 무작위로 배치 (디자인 시안 참고) */
+.bg-num.n1 { top: 10%; left: 15%; }
+.bg-num.n2 { top: 5%; right: 20%; }
+.bg-num.n3 { top: 40%; left: 5%; }
+.bg-num.n4 { top: 50%; right: 30%; }
+.bg-num.n5 { bottom: 20%; left: 25%; }
+.bg-num.n6 { bottom: 30%; right: 10%; }
+.bg-num.n7 { bottom: 5%; left: 10%; }
+.bg-num.n8 { bottom: 10%; right: 40%; }
+
+
+/* 2. 메인 콘텐츠 (숫자들보다 위에 표시) */
+.my-page-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2; /* 배경 숫자보다 위에 오도록 */
+}
+
+/* 2-1. 텍스트 헤더 */
+.my-page-section .section-header {
+    max-width: 700px; /* 텍스트가 너무 길어지지 않게 */
+    margin-bottom: clamp(60px, 10vh, 100px);
+}
+
+.my-page-section .eyebrow {
+    color: #a3a3a3;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.my-page-section .section-title {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+/* 제목의 그라데이션 텍스트 */
+.my-page-section .gradient-text {
+
+  color: #a3a3a3;
+  line-height: 1.7;
+  font-size: clamp(15px, 1.2vw, 16px);
+}
+
+
+/* 2-2. 하단 콘텐츠 (뱃지 + 목업) */
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+/* 뱃지 영역 */
+.badge-column {
+  display: flex;
+  flex-direction: column;  /* 텍스트 위, 로고 아래 수직 배치 */
+  align-items: center;     /*  가로 중심을 항상 화면 크기 관계없이 중앙 정렬 */
+  text-align: center;      /* 텍스트도 가운데 */
+}
+
+/* 라벨 (텍스트) */
+.sticker-label {
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 12px; /* 로고와 간격 */
+
+  transform: translateX(30px);
+}
+
+.badge-image {
+  display: block;
+  width: clamp(200px, 24vw, 360px);
+  height: auto;
+  margin: 0 auto; /* 가로 중앙 정렬 */
+}
+
+
+/* 폰 목업 영역 */
+.mockup-column {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+      transform: translateX(100px); 
+}
+
+.phone-mockup {
+    width: 100%;
+    max-width: 450px; /* 폰 목업 최대 너비 */
+    height: auto;
+    border-radius: 24px; /* 이미지에 프레임이 없다면 둥글게 */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+.smartwatch-section {
+    background-color: #121212;
+    padding: clamp(100px, 15vh, 160px) 0;
+    overflow: hidden;
+}
+
+.smartwatch-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.smartwatch-section .section-header {
+    max-width: 700px;
+    margin-bottom: clamp(60px, 8vh, 80px);
+}
+
+.smartwatch-section .section-title {
+    color: #fff;
+    text-align: left;
+    font-size: clamp(28px, 2.5vw, 42px);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 24px;
+}
+
+.smartwatch-section .gradient-text {
+    background: linear-gradient(90deg, #5bc6fa, #75fb83);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.smartwatch-section .description {
+    color: #a3a3a3;
+    font-size: clamp(15px, 1.2vw, 16px);
+    line-height: 1.7;
+    max-width: 600px;
+}
+
+/* 2. 무한 스크롤 이미지 갤러리 */
+.smartwatch-gallery {
+    width: 100%;
+    overflow: hidden; 
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0));
+    mask-image: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0));
+}
+
+.scroll-track {
+    display: flex;
+    flex-wrap: nowrap; 
+    gap: 30px;
+    
+    /* (이미지 180px + 간격 30px) * 14개 = 2940px */
+    width: calc((180px + 30px) * 14);
+    
+    animation: scroll-left 40s linear infinite;
+}
+
+.scroll-track img {
+    width: 180px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.scroll-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        /* 수정됨: (총 너비의 -50%) = (정확히 1세트 너비) 만큼 이동 */
+        transform: translateX(-50%);
+    }
+}
+
+
+
+/* 앱 UI 쇼케이스 섹션 */
+.app-ui-showcase {
+    padding: 0px 0 0px; /* 섹션 위아래 여백 */
+    background-color: #121212; /* 배경색 (원하는 색상으로 변경) */
+    overflow: hidden; /* 그리드 밖으로 나가는 요소 숨김 */
+}
+
+.app-ui-showcase .section-title {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 60px;
+}
+
+/* 메이슨리 그리드 컨테이너 */
+.masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4개의 동일한 너비의 열 */
+    gap: 60px; /* 열 사이의 간격 */
+    max-width: 1400px; /* 그리드 전체의 최대 너비 */
+    margin: 0 auto; /* 가운데 정렬 */
+    height: 1600px; /* 그리드 전체의 높이 지정 (조절 가능) */
+    overflow: hidden; /* 각 열의 스크롤 효과를 위해 바깥 그리드도 hidden 처리 */
+    position: relative;
+}
+
+/* 각 열 컨테이너 */
+.grid-column {
+    position: relative;
+    
+    height: 100%; /* 부모 그리드의 높이를 따름 */
+    overflow: hidden; /* 자식 요소가 넘쳐도 숨김 */
+}
+
+/* 스크롤 트랙 (실제로 움직이는 부분) */
+/* 앱 UI 쇼케이스 전용 */
+.app-ui-showcase .grid-column .scroll-track{
+  display: flex;
+  flex-direction: column; /* 세로는 여기서만 */
+  width: 100%;
+}
+
+
+/* 각 그리드 아이템 (이미지) */
+.grid-item {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+}
+
+.grid-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+.qr-section {
+  background: linear-gradient(135deg, #00c9ff, #92fe9d);
+  color: #fff;
+  padding: clamp(100px, 15vh, 160px) 20px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column; /* 세로 배치 */
+  align-items: center; /* 가로 가운데 정렬 */
+  justify-content: center; /* 세로 중앙 정렬 */
+  gap: 24px; /* 각 요소 간 간격 */
+  min-height: 80vh; /* 화면 전체 높이로 중앙 정렬 */
+}
+
+.qr-title {
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.5;
+  color: #000000;
+}
+
+.app-store-link {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.app-store-link:hover {
+  transform: scale(1.08);
+}
+
+.app-store-badge {
+  height: clamp(40px, 5vw, 70px); 
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.qr-code-wrapper {
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.qr-code-img {
+  width: 130px;
+  height: 130px;
+  display: block;
+}
+
+/* =======================================
+   Scroll to Top (Top 버튼) 스타일
+   ======================================= */
+#scrollTopBtn {
+  position: fixed;
+  right: 30px; bottom: 30px;
+  width: 50px; height: 50px;
+  border: 0; border-radius: 50%;
+  background: #48e78a; color:#121212;
+  cursor: pointer;
+  z-index: 99999;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
+  /* 버튼 호버 시 밝은 녹색 */
+  #scrollTopBtn:hover { background: #3CFF78; }
+
+  /* 보이기 상태 */
+  #scrollTopBtn.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  @media (prefers-reduced-motion: reduce){
+    #scrollTopBtn{ transition:none; }
+  }
+/* ----------- 애니메이션 정의 ----------- */
+
+/* 위로 스크롤 애니메이션 */
+@keyframes scrollUp {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); } /* 트랙 높이의 절반 (복제된 콘텐츠 1세트 높이) */
+}
+
+/* 아래로 스크롤 애니메이션 */
+@keyframes scrollDown {
+    0% { transform: translateY(-50%); } /* 시작 위치를 절반 아래로 설정 */
+    100% { transform: translateY(0); } /* 끝 위치를 시작점으로 설정 */
+}
+
+/* 각 열에 애니메이션 적용 */
+.grid-column.scroll-up .scroll-track {
+    animation: scrollUp 40s linear infinite; /* 40초 동안 선형으로 무한 반복 */
+}
+
+.grid-column.scroll-down .scroll-track {
+    animation: scrollDown 40s linear infinite; /* 40초 동안 선형으로 무한 반복 */
+}
+.grid-column:hover .scroll-track {
+    animation-play-state: paused;
+}
+
+
+/* ----------- 반응형 디자인 ----------- */
+@media (max-width: 992px) {
+    .masonry-grid {
+        grid-template-columns: repeat(3, 1fr); 
+        height: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .masonry-grid {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 15px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .masonry-grid {
+        grid-template-columns: 1fr; /* 아주 작은 모바일: 1열 */
+        gap: 10px;
+        height: 350px;
+    }
+}
+
+.site-footer .footer-content {
+  display: flex;                /* grid 대신 flex로 변경 */
+  justify-content: center;      /* 전체 가운데 정렬 */
+  align-items: flex-start;      /* 위쪽 기준 정렬 */
+  gap: 80px;                    /* 열 간격 */
+  flex-wrap: nowrap;            /* 강제로 한 줄 유지 (필요 시 wrap) */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-column {
+  text-align: center;
+  flex: 1;                     
+}
+
+.footer-column .column-title{
+  font-size: 14px; font-weight: 700;
+  color: #bbb; letter-spacing: .5px;
+  margin-bottom: 20px; text-transform: uppercase;
+}
+
+/* 리스트 박스를 column 가운데 두고, 내부 텍스트는 왼쪽 정렬 */
+.footer-list{
+  display: inline-block;
+  text-align: left;
+  margin: 0; padding: 0; list-style: none;
+  width: max-content;         /* 내용만큼만 박스가 잡히게 */
+  max-width: 440px;           /* 너무 길면 브레이크 */
+}
+
+/* 넓은 이메일을 위해 줄바꿈 허용(튀어나감 방지) */
+.footer-list li{
+  font-size:14px;
+  color:#a3a3a3;
+  line-height:1.9;
+
+  /* 🔽 바꿔줘 */
+  white-space: nowrap;          /* 기본 줄바꿈 허용 */
+  word-break: keep-all;         /* 한국어는 단어 단위로만 줄바꿈 */
+  overflow-wrap: break-word;    /* 아주 길면 단어 경계에서만 줄바꿈 */
+  /* (이전에 쓰던 word-break: break-all; 은 삭제!) */
+}
+
+.footer-list.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 32px;
+  justify-content: center;
+}
+
+/* 💚 상단 로고 + 문구 영역 */
+.footer-top {
+    margin-top: 150px;
+  text-align: center;
+  margin-bottom: 150px;
+}
+
+.footer-logo {
+  width: clamp(100px, 16vw, 180px);
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+  transform: translateX(-16px); /* ✅ 왼쪽으로 약간 이동 */
+}
+
+
+.footer-thanks {
+  font-size: clamp(32px, 3.2vw, 40px);
+  font-weight: 500;
+  color: #64f4ac; /* 부드러운 포인트 컬러 */
+  background: linear-gradient(90deg, #00ff80, #00c8ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* 그라데이션 텍스트 */
+}
+
+
+
+
+
+
+.footer-content { display: flex; flex-direction: row; }
+
+
+
+@keyframes pop-in{
+    0%   { opacity:0; transform: translateY(24px) scale(.96); }
+    60%  { opacity:1; transform: translateY(-6px) scale(1.02); }
+    100% { opacity:1; transform: translateY(0)    scale(1); }
+  }
+@keyframes float-bob{
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); }
+  50%  { transform: translateY(calc(var(--float-ampl) * -1)) translateX(4px) rotate(0.25deg); }
+  100% { transform: translateY(0) translateX(0) rotate(0deg); }
+}
+
+
+  @media (prefers-reduced-motion: reduce){
+    .mock img{ opacity:1; transform:none; animation:none; }
+  }
+
+  @media (max-width: 640px){
+    :root { --nav-h: 56px; }
+    .menu{ gap: 20px; }
+    .bg-word{ opacity: .08; }
+  }
+
+  @media (min-width: 1200px){
+  .overview .wrap{
+    width: min(1100px, 100%);
+    margin-left: clamp(40px, 8vw, 160px);
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: clamp(16px, 4vw, 64px);
+  }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(60px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; animation: none; }
+}
+
+
+@keyframes pulse-glow {
+  from { box-shadow: 0 0 15px rgba(0, 255, 162, 0.4), 0 0 30px rgba(0, 229, 255, 0.3); }
+  to { box-shadow: 0 0 25px rgba(0, 255, 162, 0.6), 0 0 45px rgba(0, 229, 255, 0.5); }
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(240%); }
+}
+
+/* my record 애니메이션들 */
+@keyframes beat{
+  0%,100%{ transform: scale(1);     box-shadow: 0 0 0 0 rgba(45,212,191,.0); }
+  35%    { transform: scale(1.08);  box-shadow: 0 0 22px 6px rgba(45,212,191,.16); }
+  60%    { transform: scale(.96);   box-shadow: 0 0 6px 2px rgba(45,212,191,.10); }
+}
+@keyframes ripple{
+  0%   { width:0;   height:0;   opacity:.45; }
+  70%  { opacity:.08; }
+  100% { width: 520px; height:520px; opacity:0; }
+}
+@keyframes floatY{
+  0%,100%{ transform: translateY(0); }
+  50%    { transform: translateY(-10px); }
+}
+/* my record 애니메이션들 */
+
+
+@media (max-width: 1024px){
+  .persona-section { padding: 140px 20px; }
+  .section-header { margin-bottom: 160px; }
+
+  .persona-cards-wrapper { gap: 28px; }
+
+  .persona-card.left.animate-visible  { transform: translate(-18%, -6%); }
+  .persona-card.right.animate-visible { transform: translate(18%, 14%); }
+
+  .persona-card { max-width: 360px; padding: 32px; }
+  .profile-img { width: 110px; height: 110px; }
+  .name { font-size: 24px; }
+}
+
+@media (max-width: 720px){
+  .persona-section { padding: 100px 18px; }
+
+  .section-header { margin-bottom: 56px; }
+  .section-title { font-size: 28px; line-height: 1.35; }
+
+  .persona-cards-wrapper{
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .persona-card{
+    width: min(560px, 92vw);
+    max-width: none;
+    min-width: 0;
+    padding: 28px;
+    transform: translateY(40px);
+  }
+
+  .persona-card.animate-visible{
+    transform: translateY(0);
+  }
+  .persona-card.left.animate-visible,
+  .persona-card.right.animate-visible{
+    transform: translateY(0) !important;
+  }
+
+  .profile-img{ width: 96px; height: 96px; }
+  .name{ font-size: 22px; }
+  .job{ font-size: 16px; }
+  .description{ font-size: 14px; line-height: 1.6; }
+}
+
+@media (max-width: 360px){
+  .persona-card{ padding: 22px; }
+  .profile-img{ width: 84px; height: 84px; }
+  .name{ font-size: 20px; }
+}
+
+/* 반응형: my record 이 부분 미디어 조정*/
+@media (max-width: 900px){
+  .promo-inner{ grid-template-columns: 1fr; gap:36px; }
+  .hearts-stack{ height: 48vh; }
+  .heart-wrap.big{ right: 6%; top: 36%; }
+  .heart-wrap.small{ right: -2%; top: 6%; }
+}
+
+/* 모션 민감 사용자 my record 이 부분 미디어 조정*/
+@media (prefers-reduced-motion: reduce){
+  .ring,.heart-core,.heart-wrap.small{ animation:none; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .progress::before,
+  .progress.run,
+  .progress.run::after { animation: none !important; }
+}
+
+/* 목업이랑 움직이는 그래프 키프레임 */
+@keyframes progress-fill{
+  from { width: 0%; }
+  to   { width: var(--target, 100%); }
+}
+@keyframes progress-stripes{
+  to { background-position: 56px 0; }
+}
+@keyframes progress-shine{
+  to { transform: translateX(120%); opacity: 0; }
+}
+
+/*둥둥모션*/
+
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(calc(var(--float-direction, 1) * -1 * var(--float-distance, 30px)))
+               rotate(var(--float-rotate, 3deg));
+  }
+}
+
+
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* [중요] 스크롤 애니메이션 정의 */
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%); 
+  }
+}
+/* ============================================= */
+/* 애니메이션 정의 (Keyframes)         */
+/* ============================================= */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(calc(-1 * var(--float-distance, 10px))); }
+}
+
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo">
+      <img src="headerlogo.png" alt="Boutine Logo" />
+    </div>
+    <nav class="menu">
+      <a href="#section1">HOME</a>
+      <a href="#section2">VIDEO</a>
+      <a href="#section3">SERVICE</a>
+    </nav>
+  </div>
+</header>
+  <main>
+    <section id="section1" class="hero" >
+<h1 class="bg-word">
+  <span class="first-line">BOUTINE</span><br>
+  BOUTINE<br>
+  BOUTINE<br>
+  BOUTINE<br>
+  BOUTINE
+</h1>
+      <div class="mock" id="mock">
+        <img src="02_1.png" alt="목업">
+      </div>
+    </section>
+<section class="overview" id="overview">
+  <div class="wrap">
+    <p class="eyebrow">Overview</p>
+    <h2 class="title-lg">독서도 이젠 하나의 루틴으로<br>Boutine</h2>
+    
+<p class="desc">Boutine(부틴)은 독서를 하나의 라이프 스타일로 즐기며 다른 사람들과 공유 및 연결 속에 
+서로의 취향과 개성을 표현할 수 있는 새로운 독서경험을 제공하는 독서 기록 앱 서비스 입니다. 
+하루의 짧은 읽음이 쌓여 나만의 취향이 되고, 또 하나의 라이프 스타일이 되어 나가는 경험을 제안 합니다.
+</p>
+  </div>
+</section>
+
+  <section class="full-image">
+  <img src="run.png" alt="full image">
+
+    <div class="text-box box1">
+    요즘 친구들은 무슨 책 읽는지 궁금하네...<br>
+    다같이 읽으면 더 재미있게 읽을 수 있을 것 같은데<br>
+    독서 활동도 공유할 수 있을까?
+  </div>
+
+  <div class="text-box box2">
+    올해는 책 20권 읽는게 목표였는데 생각보다<br>
+    꾸준히 읽는게 쉽지 않구나... 의식하지 않고<br>
+    책 읽는 습관 좀 들이고 싶은데..
+  </div>
+
+  <div class="text-box box3">
+    이번주는 저번주보다 분명히 많이 읽은 것 같은데?<br>
+    얼마나 많이 읽었는지 궁금하네... 한눈에 보면 좋을 것 같은데..<br>
+    내가 얼마나 책을 많이 읽었는지 궁금해
+  </div>
+
+</section>
+
+<section id="section2" class="video-head">
+  <h3 class="video-title">Video</h3>
+  <p class="video-subtitle">Boutine 앱 서비스 영상</p>
+</section>
+
+<section class="video" id="video">
+  <div class="video-wrap">
+    <video id="demoVideo" preload="metadata" playsinline webkit-playsinline
+           controlslist="nodownload noplaybackrate" poster="video-poster.jpg">
+      <source src="video.mp4" type="video/mp4" />
+      동영상 재생을 지원하지 않는 브라우저입니다.
+    </video>
+    <button class="play" aria-label="재생"></button>
+  </div>
+</section>
+
+
+
+<section class="background" id="background">
+  <div class="wrap">
+    <p class="eyebrow">Background</p>
+    <h2 class="title-lg">여러 분야로 나아가고 있는 텍스트힙 유행</h2>
+    <p class="desc">
+      독서 해시태그부터 각종 도서전, 도서관 이벤트, 온오프라인 독서모임까지 여러 다양한 분야로 뻗어나가<br>
+      이제 유행이 아닌 하나의 문화와 경험으로 다시 새롭게 자리잡아가고 있는 독서 문화
+    </p>
+
+    <div class="image-gallery">
+      <div class="image-item item-1 reveal-img">
+        <img src="image1.png" alt="서울 국제 도서전">
+      </div>
+      <div class="image-item item-2 reveal-img">
+        <img src="image2.png" alt="북스타그램 검색 화면">
+      </div>
+      <div class="image-item item-3 reveal-img">
+        <img src="image3.png" alt="독서 통계">
+      </div>
+            <div class="image-item item-4 reveal-img">
+        <img src="image4.jpg" alt="청계천">
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<section class="image-reveal" id="image-reveal">
+  <div class="wrap">
+    <p class="eyebrow">Competior analysis</p>
+    <h2 class="title-lg">다양한 독서 서비스가 있지만<br>
+나의 독서 활동을 보여주진 않아요</h2>
+    <p class="desc">
+      감상을 공유하는 서비스는 많지만 독서 활동 자체의 공유를 기반으로 한 서비스는 없어요  </p>
+    <figure class="reveal">
+      <img src="oximage.png" alt="메인 이미지">
+    </figure>
+  </div>
+</section>
+
+<section class="wavy-gradient-section">
+  <div class="wavy-content">
+    <div class="logo"><img src="wavylogo.png" alt="B 로고"></div>
+        <h2 class="main-title">독서를 조용하고 지루한 습관에서 벗어나<br>스포티하고 자기표현의 방식으로 바꿀 수는 없을까요?</h2>
+  </div>
+</section>
+
+
+<section class="persona-section">
+  <div class="section-header">
+    <p class="persona-tag">Persona</p>
+    <h2 class="section-title">저희의 2030세대 페르소나를<br>2명 제작해보았습니다</h2>
+  </div>
+
+  <div class="persona-cards-wrapper">
+    <div class="persona-card left">
+      <div class="profile-img">
+        <img src="persona1.png" alt="원지민 프로필">
+      </div>
+      <p class="name">원지민</p>
+      <p class="age-gender">37/여자</p>
+      <p class="job">광고 마케팅 회사 직원</p>
+      <p class="description">
+        지민은 마케팅 회사 직원으로 바쁜 직장이지만 자기계발 욕구가 강해 출퇴근 시간과 주말을 활용해 꾸준히 책을 읽고 싶어한다. 읽은 책을 통해 성장과 성취를 느끼고 싶지만, 혼자만으로는 쉽게 흐지부지 되는 경우가 많다. 그녀는 친구나 타인에게 자연스럽게 독서 경험을 공유하고 드러내며, 자신의 이미지 브랜딩을 동시에 하고자 한다.
+      </p>
+    </div>
+
+    <div class="persona-card right">
+      <div class="profile-img">
+        <img src="persona2.png" alt="최원준 프로필">
+      </div>
+      <p class="name">최원준</p>
+      <p class="age-gender">24/남자</p>
+      <p class="job">시각디자인과 대학생</p>
+      <p class="description">
+        민준은 SNS를 자주하고, 새로운 트렌드에 민감하다. 독서에 본격적으로 깊이 빠져들었다기보다는, 요즘 뜨는 '텍스트 할리우드' '북 챌린지' 같은 흐름에 흥미를 느껴 독서를 시작한다. 책을 끝까지 다 읽는 것보다는 "읽고 있다"는 경험 자체를 공유하는 데서 재미를 느낀다. 친구들과 가볍게 인증하거나 짧은 챌린지에 참여하면서 동기 부여를 얻는 타입이다.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section class="needs-section">
+    <div class="needs-bg-arc"></div>
+    <div class="needs-content">
+        <div class="needs-icon reveal">
+            <img src="bulb.png" alt="아이디어 전구">
+        </div>
+        <h2 class="needs-title reveal">페르소나를 통해 서비스의 가설을 세운 후<br>여러가지 <span class="needs-highlight">니즈</span>들을 발견했어요</h2>
+    </div>
+</section>
+
+
+<section class="needs-flow-section">
+  <div class="needs-flow-container">
+    <div class="needs-flow-track">
+      <div class="need-card">
+        <div class="card-header">
+          <div class="card-circle"></div>
+          <h3 class="card-title">Needs 01</h3>
+        </div>
+        <p class="card-desc">개인 브랜딩을 위해 독서·활동 기록 공유하고 싶음. 독서량과 성취가 랭킹 등의 표현으로 만족감 얻기.</p>
+      </div>
+      <div class="need-card">
+        <div class="card-header">
+          <div class="card-circle"></div>
+          <h3 class="card-title">Needs 02</h3>
+        </div>
+        <p class="card-desc">친구 혹은 타인과 책 자랑을 부담 없이 공유할 수 있는 공간 필요.</p>
+      </div>
+      <div class="need-card">
+        <div class="card-header">
+          <div class="card-circle"></div>
+          <h3 class="card-title">Needs 03</h3>
+        </div>
+        <p class="card-desc">짧고 간단한 기록으로도 소셜 활동 가능. 친구랑 가볍게 공유하거나 꾸준히 길게보다는 가볍게 기록.</p>
+      </div>
+
+      <div class="need-card">
+        <div class="card-header">
+          <div class="card-circle"></div>
+          <h3 class="card-title">Needs 01</h3>
+        </div>
+        <p class="card-desc">개인 브랜딩을 위해 독서·활동 기록 공유하고 싶음. 독서량과 성취가 랭킹 등의 표현으로 만족감 얻기.</p>
+      </div>
+      <div class="need-card">
+        <div class="card-header">
+          <div class="card-circle"></div>
+          <h3 class="card-title">Needs 02</h3>
+        </div>
+        <p class="card-desc">친구 혹은 타인과 책 자랑을 부담 없이 공유할 수 있는 공간 필요.</p>
+      </div>
+      <div class="need-card">
+        <div class="card-header">
+          <div class="card-circle"></div>
+          <h3 class="card-title">Needs 03</h3>
+        </div>
+        <p class="card-desc">짧고 간단한 기록으로도 소셜 활동 가능. 친구랑 가볍게 공유하거나 꾸준히 길게보다는 가볍게 기록.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="goal-section">
+  <div class="image-wrapper">
+    <img src="bookimage.png" alt="책 읽는 이미지">
+  </div>
+
+  <div class="text-content">
+    <p class="eyebrow">Project Goal</p>
+    <h2>나의 독서 목표를 설정하고<br>친구들과 기록을 공유하는 서비스</h2>
+  </div>
+</section>
+
+<section class="service-features-section">
+  <div class="features-container">
+    <div class="feature-item">
+      <h3>Record</h3>
+      <p>읽은 페이지와 시간을 기록하고,<br>일-주-월-년 단위로 시각화해 확인할 수 있어요.</p>
+      <div class="feature-visual" id="record-visual">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+
+    <div class="feature-item">
+      <h3>Connect</h3>
+      <p>함께 읽는 친구들의 진행 상황과 랭킹을 실시간으로 확인하고, 친구에게 공감을 할 수 있어요.</p>
+      <div class="feature-visual" id="connect-visual">
+        </div>
+    </div>
+
+<div class="feature-item">
+  <h3>Badge</h3>
+  <p>각종 챌린지들을 수행하고<br>여러 다양한 뱃지를 모아요.</p>
+
+  <div class="feature-visual" id="badge-visual">
+    <div class="badge-atom">
+<div class="badge-svg-wrapper">
+  <svg class="badge-svg" viewBox="0 0 600 600"
+       xmlns="http://www.w3.org/2000/svg"
+       xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true">
+    <defs>
+      <linearGradient id="gemFill" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#53c8ff"/>
+        <stop offset="100%" stop-color="#4ad8ff"/>
+      </linearGradient>
+      <linearGradient id="facetShade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(0,0,0,0.10)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0.25)"/>
+      </linearGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="b"/>
+        <feMerge>
+          <feMergeNode in="b"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    <circle cx="300" cy="300" r="260" fill="#191919"/>
+
+    <!-- 보석 -->
+    <g id="gem" filter="url(#glow)" stroke="#7CFF87" stroke-width="6" stroke-linejoin="round" stroke-miterlimit="2"
+    transform="translate(-5,-15)">
+      <polygon fill="url(#gemFill)"
+        points="300,150 370,180 420,255 455,360 385,475 300,505 220,475 195,325 255,240"/>
+      <!-- 내부 선 -->
+      <g fill="none" stroke="#7CFF87" stroke-width="4" opacity="0.95">
+        <path d="M255 240L300 150L370 180L420 255L455 360L385 475L300 505L220 475L195 325Z"/>
+        <path d="M300 150L300 230L255 240"/>
+        <path d="M300 230L350 235L370 180"/>
+        <path d="M300 230L320 300L255 240"/>
+        <path d="M320 300L390 315L455 360"/>
+        <path d="M320 300L300 370L390 315"/>
+        <path d="M300 370L235 420L220 475"/>
+        <path d="M300 370L355 420L385 475"/>
+        <path d="M235 420L300 505L355 420"/>
+        <path d="M255 240L230 330L195 325"/>
+        <path d="M370 180L405 260L350 235"/>
+        <path d="M230 330L300 370L370 425"/>
+      </g>
+
+      <!-- 외곽 따라가는 빛 -->
+      <path d="M255 240L300 150L370 180L420 255L455 360L385 475L300 505L220 475L195 325Z"
+            fill="none" stroke="#7CFF87" stroke-width="6"
+            stroke-dasharray="22 260" stroke-dashoffset="0">
+        <animate attributeName="stroke-dashoffset" from="0" to="-282" dur="3s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- 하이라이트/그림자 -->
+      <polygon points="300,150 370,180 350,235 300,230" fill="rgba(255,255,255,0.15)"/>
+      <polygon points="220,475 300,505 385,475 355,420 300,370 235,420" fill="url(#facetShade)"/>
+
+
+    </g><g id="orbits" transform="translate(296,288) scale(0.78)"
+   fill="none" stroke="#7CFF87" stroke-width="3" stroke-linecap="round">
+
+  <!-- 왼쪽 위 ↘ 오른쪽 아래 -->
+  <path id="o1Path"
+        d="M -220 0
+           a 220 110 28 1 0 440 0
+           a 220 110 28 1 0 -440 0"
+        pathLength="1000"/>
+
+  <!-- 오른쪽 위 ↙ 왼쪽 아래 -->
+  <path id="o2Path"
+        d="M -200 0
+           a 200 90 -28 1 0 400 0
+           a 200 90 -28 1 0 -400 0"
+        pathLength="1000" opacity="0.85"/>
+
+  <circle r="8" fill="#7CFF87">
+    <animateMotion dur="8s" rotate="auto" repeatCount="indefinite">
+      <mpath xlink:href="#o1Path"/>
+    </animateMotion>
+  </circle>
+
+  <circle r="6" fill="#7CFF87" opacity="0.9">
+    <animateMotion dur="10s" begin="-2s" rotate="auto" repeatCount="indefinite">
+      <mpath xlink:href="#o2Path"/>
+    </animateMotion>
+  </circle>
+
+  <circle r="5" fill="#7CFF87" opacity="0.85">
+    <animateMotion dur="7.2s" begin="-1.2s" rotate="auto" repeatCount="indefinite">
+      <mpath xlink:href="#o1Path"/>
+    </animateMotion>
+  </circle>
+
+  <circle r="12" fill="#7CFF87" opacity="0.8">
+    <animateMotion dur="9.4s" begin="-3.4s" rotate="auto" repeatCount="indefinite">
+      <mpath xlink:href="#o2Path"/>
+    </animateMotion>
+  </circle>
+</g>
+  </svg>
+</div>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="promo-record-section">
+  <div class="promo-inner">
+    <!-- 큼직한 타이틀 -->
+    <div class="promo-title">
+      <h2>Read In<br><span>My Record</span></h2>
+    </div>
+
+<div class="hearts-stack">
+  <div class="heart-field">
+    <!-- 필요 개수만큼 복제해서 쓰기 -->
+    <div class="heart-bubble size-lg" style="--x:72%; --delay:0s;"></div>
+    <div class="heart-bubble size-md" style="--x:84%; --delay:1.2s;"></div>
+    <div class="heart-bubble size-sm" style="--x:66%; --delay:2.1s;"></div>
+    <div class="heart-bubble size-md" style="--x:78%; --delay:3.0s;"></div>
+    <div class="heart-bubble size-sm" style="--x:60%; --delay:4.2s;"></div>
+  </div>
+</div>
+
+
+      <!-- 작은 하트 (약간 위/오른쪽, 시간차) -->
+      <div class="heart-wrap small">
+        <span class="ring r1"></span>
+        <span class="ring r2"></span>
+        <div class="heart-core">
+          <svg viewBox="0 0 24 24" class="heart-icon">
+            <path fill="currentColor"
+              d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3
+                 C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3
+                 C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 추가 큰 하트 -->
+<div class="heart-wrap big">
+  <span class="ring r1"></span>
+  <span class="ring r2"></span>
+  <div class="heart-core">
+    <svg viewBox="0 0 24 24" class="heart-icon">
+      <path fill="currentColor"
+        d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3
+           C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3
+           C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"/>
+    </svg>
+  </div>
+</div>
+
+</section>
+
+<section class="user-flow-section">
+  <div class="wrap">
+    <p class="eyebrow">User flow</p>
+    <h2 class="title-lg">유저 플로우</h2>
+    
+    <figure class="flow-chart-figure">
+      <img src="userflow.png" alt="Boutine 서비스 유저 플로우 차트">
+    </figure>
+  </div>
+</section>
+
+
+<section class="design-system-section">
+  <div class="wrap">
+    <p class="eyebrow">Design system</p>
+    <h2 class="title-lg">디자인 시스템</h2>
+
+    <div class="design-content-grid">
+
+      <div class="design-column reveal-item">
+        <h3>Color</h3>
+        <div class="color-palette">
+          <div class="color-swatch">
+            <div class="color-box color-main-bg"></div>
+            <p class="hex-code">#121212</p>
+          </div>
+          <div class="color-swatch">
+            <div class="color-box color-primary"></div>
+            <p class="hex-code">#5bc6fa</p>
+          </div>
+          <div class="color-swatch">
+            <div class="color-box color-secondary"></div>
+            <p class="hex-code">#75fb83</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-column details-column reveal-item">
+        <div class="design-keywords">
+          <h3>Design keyword</h3>
+          <div class="keyword-tags">
+            <span class="keyword-tag">#스포티</span>
+            <span class="keyword-tag">#직관적인</span>
+            <span class="keyword-tag">#볼드한</span>
+          </div>
+        </div>
+
+        <div class="design-typography">
+          <h3>Typography</h3>
+          <div class="font-group">
+            <div class="font-specimen font-helvetica">
+              <p class="font-bold">Sharing reading activities</p>
+              <span>Bold</span>
+            </div>
+            <div class="font-specimen font-helvetica">
+              <p class="font-medium">Sharing reading activities</p>
+              <span>Medium</span>
+            </div>
+            <div class="font-specimen font-helvetica">
+              <p class="font-regular">Sharing reading activities</p>
+              <span>Regular</span>
+            </div>
+          </div>
+          <div class="font-group">
+            <div class="font-specimen font-noto">
+              <p class="font-bold">나의 독서활동 기록 공유</p>
+              <span>Bold</span>
+            </div>
+            <div class="font-specimen font-noto">
+              <p class="font-medium">나의 독서활동 기록 공유</p>
+              <span>Medium</span>
+            </div>
+            <div class="font-specimen font-noto">
+              <p class="font-regular">나의 독서활동 기록 공유</p>
+              <span>Regular</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<div class="pair-photos">
+  <figure class="photo-frame">
+    <img src="phoneb.png"  alt="">
+  </figure>
+  <figure class="photo-frame">
+    <img src="logo1.png" alt="">
+  </figure>
+</div>
+
+<section class="cta-section">
+  <div class="background-arch"></div>
+
+  <div class="cta-content">
+    <div class="cta-header">
+      <p class="eyebrow">our service</p>
+    </div>
+
+    <div class="mockup-container">
+      <img src="02_1.png" alt="Boutine 앱 화면 목업" class="mockup-image">
+    </div>
+
+    <h3 class="cta-logo">BOUTINE</h3>
+  </div>
+</section>
+
+<section id="section3" class="feature-showcase-section">
+  <div class="wrap">
+    <div class="showcase-header">
+      <p class="eyebrow reveal">Home</p>
+      <h2 class="title-lg reveal">현재 읽고 있는 책의<br>페이지를 기록해보세요!</h2>
+      <p class="desc reveal">
+        매일 매일 나의 독서 활동을 기록해요. 다이얼을 돌리는 듯 재미있는 인터랙션으로 과거부터 현재까지<br>
+        이어져온 나의 독서활동을 확인할 수 있어요.
+      </p>
+    </div>
+<div class="showcase-duo">
+  <div class="duo-left">
+    <div class="vm-phone">
+      <img src="phoneframe.png" class="vm-frame" alt="">
+      <div class="vm-screen">
+        <video class="vm-video" src="screenrecord.mp4" muted autoplay loop playsinline></video>
+      </div>
+    </div>
+  </div>
+
+  <div class="duo-right">
+    <div class="vm-phone">
+      <img src="PHONE-2.png" class="vm-frame" alt="">
+      <!-- <div class="vm-screen">
+        <video class="vm-video" src="screenrecord.mp4" muted autoplay loop playsinline></video>
+      </div> -->
+    </div>
+
+    <!-- ✅ callouts를 duo-right 안으로 -->
+    <div class="callouts">
+      <!-- <div class="label-line book-name-line"><span class="text">book name</span><span class="dot"></span></div> -->
+      <div class="label-line my-page-line"><span class="text">my page</span><span class="dot"></span></div>
+      <div class="label-line my-record-line"><span class="text">my record</span><span class="dot"></span></div>
+      <div class="label-line friends-line"><span class="text">friends</span><span class="dot"></span></div>
+      <div class="label-line time-line"><span class="text">reading time</span><span class="dot"></span></div>
+      <div class="label-line page-line"><span class="text">page count</span><span class="dot"></span></div>
+
+      <!-- <ul class="friends">
+        <li><img src="friend1.png" alt="friend 1"></li>
+        <li><img src="friend2.png" alt="friend 2"></li>
+        <li><img src="friend3.png" alt="friend 3"></li>
+      </ul> -->
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</section>
+
+<section class="reading-activities">
+  <div class="container">
+    <div class="text-content rail-wrap">
+      <p class="eyebrow">Report</p>
+      <h2 class="section-title">
+        나의 독서를<br>
+        한 눈에 볼 수 있어요
+      </h2>
+      <p class="description">
+        일/주/월/년 단위로 기록을 시각화해 한 화면에서 비교할 수 있어요.
+      </p>
+    </div>
+
+    <div class="carousel-wrapper">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="03.png" alt="앱 화면 1"></div>
+          <div class="swiper-slide"><img src="04.png" alt="앱 화면 2"></div>
+          <div class="swiper-slide"><img src="05.png" alt="앱 화면 3"></div>
+          <div class="swiper-slide"><img src="06.png" alt="앱 화면 4"></div>
+          <div class="swiper-slide"><img src="08.png" alt="앱 화면 5"></div>
+          <div class="swiper-slide"><img src="040.png" alt="앱 화면 6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="reading-room-section">
+    <div class="container">
+
+        <div class="text-content">
+            <p class="eyebrow">Reading room</p>
+            <h2 class="section-title">
+                같은 책을 읽고 있는 친구들의<br>
+                진도율을 함께 공유해요
+            </h2>
+            <p class="description">
+                독서방에서 사람들과 독서활동을 공유하고 하트를 보내 응원해요.<br>
+                챌린지를 통해 뱃지를 획득할 수 있어요.
+            </p>
+        </div>
+
+        <div class="visual-content">
+
+            <div class="mockups">
+                <img src="PHONE-3.png" alt="앱 랭킹 화면 목업 1" class="mockup-img">
+                <img src="PHONE-4.png" alt="앱 랭킹 화면 목업 2" class="mockup-img">
+            </div>
+
+            <div class="ranking-list-wrapper">
+                <ol class="ranking-list">
+                    <li class="ranking-item">
+                        <div class="user-profile">
+                            <img src="friend1.png" alt="wondsdfg 프로필">
+                        </div>
+                        <div class="user-info">
+                            <span class="username">wondsdfg</span>
+                            <span class="status">페이지 진도율</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 87%;"></div>
+                            </div>
+                            <span class="percentage">87%</span>
+                        </div>
+                        <div class="actions">
+                            <button class="icon-btn heart" aria-label="하트 보내기"></button>
+                            <button class="icon-btn plus" aria-label="친구 추가"></button>
+                        </div>
+                    </li>
+                    <li class="ranking-item">
+                        <div class="user-profile">
+                            <img src="friend2.png" alt="kwon8940 프로필">
+                        </div>
+                        <div class="user-info">
+                            <span class="username">kwon8940</span>
+                            <span class="status">페이지 진도율</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 80%;"></div>
+                            </div>
+                            <span class="percentage">80%</span>
+                        </div>
+                        <div class="actions">
+                            <button class="icon-btn heart" aria-label="하트 보내기"></button>
+                            <button class="icon-btn plus" aria-label="친구 추가"></button>
+                        </div>
+                    </li>
+                    <li class="ranking-item">
+                        <div class="user-profile">
+                            <img src="friend3.png" alt="t0mat0_3 프로필">
+                        </div>
+                        <div class="user-info">
+                            <span class="username">t0mat0_3</span>
+                            <span class="status">페이지 진도율</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 76%;"></div>
+                            </div>
+                            <span class="percentage">76%</span>
+                        </div>
+                        <div class="actions">
+                            <button class="icon-btn heart" aria-label="하트 보내기"></button>
+                            <button class="icon-btn plus" aria-label="친구 추가"></button>
+                        </div>
+                    </li>
+                    <li class="ranking-item">
+                        <div class="user-profile">
+                            <img src="friend1.png" alt="mjk0_302 프로필">
+                        </div>
+                        <div class="user-info">
+                            <span class="username">mjk0_302</span>
+                            <span class="status">페이지 진도율</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 64%;"></div>
+                            </div>
+                            <span class="percentage">64%</span>
+                        </div>
+                        <div class="actions">
+                            <button class="icon-btn heart" aria-label="하트 보내기"></button>
+                            <button class="icon-btn plus" aria-label="친구 추가"></button>
+                        </div>
+                    </li>
+                    <li class="ranking-item">
+                        <div class="user-profile">
+                            <img src="friend2.png" alt="bmkeem_0 프로필">
+                        </div>
+                        <div class="user-info">
+                            <span class="username">bmkeem_0</span>
+                            <span class="status">페이지 진도율</span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 60%;"></div>
+                            </div>
+                            <span class="percentage">60%</span>
+                        </div>
+                        <div class="actions">
+                            <button class="icon-btn heart" aria-label="하트 보내기"></button>
+                            <button class="icon-btn plus" aria-label="친구 추가"></button>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="my-page-section">
+
+    <div class="background-numbers">
+        <span class="bg-num n1">70</span>
+        <span class="bg-num n2">29</span>
+        <span class="bg-num n3">1000</span>
+        <span class="bg-num n4">343</span>
+        <span class="bg-num n5">34</span>
+        <span class="bg-num n6">28</span>
+        <span class="bg-num n7">146</span>
+        <span class="bg-num n8">60</span>
+    </div>
+
+    <div class="container">
+        <div class="section-header rail-wrap">
+            <p class="eyebrow">My page</p>
+            <h2 class="section-title">
+                나의 활동 히스토리와 추천<br>
+독서 뱃지를 확인해요</h2>
+                <span class="gradient-text">독서룸 검색, 친구 찾기 등 부틴의 커뮤니케이션 기능이 위치해 있어요. 지금 읽고있던 책을 다 읽었다면 <br>
+                    독서룸 맴버들이 추천한 책도 읽어볼까요?</span>
+            
+        </div>
+
+        <div class="content-wrapper">
+            <div class="badge-column">
+                <span class="sticker-label">L.100 드림 스티커</span>
+                <img src="logo2.png" class="badge-image">
+            </div>
+            
+            <div class="mockup-column">
+                <img src="07.png" alt="마이페이지 앱 화면" class="phone-mockup">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="smartwatch-section">
+    <div class="container">
+        <div class="section-header rail-wrap">
+            <h2 class="section-title">
+                스마트 워치로<br>
+                <span class="gradient-text">더 간편하게 기록해요!</span>
+            </h2>
+            <p class="description">
+                모바일 앱에서 지원하는 부틴의 핵심 기능을 스마트워치에서도 만나 보세요.<br>
+                나의 독서 활동 기록과 진도율을 단순화하여 제공합니다.
+            </p>
+        </div>
+    </div>
+
+    <div class="smartwatch-gallery">
+        <div class="scroll-track">
+            <img src="Watch01.png" alt="스마트 워치 UI 1">
+            <img src="Watch02.png" alt="스마트 워치 UI 2">
+            <img src="Watch03.png" alt="스마트 워치 UI 3">
+            <img src="Watch04.png" alt="스마트 워치 UI 4">
+            <img src="Watch05.png" alt="스마트 워치 UI 5">
+            <img src="Watch06.png" alt="스마트 워치 UI 6">
+            <img src="Watch07.png" alt="스마트 워치 UI 7">
+
+            <img src="Watch01.png" alt="스마트 워치 UI 1">
+            <img src="Watch02.png" alt="스마트 워치 UI 2">
+            <img src="Watch03.png" alt="스마트 워치 UI 3">
+            <img src="Watch04.png" alt="스마트 워치 UI 4">
+            <img src="Watch05.png" alt="스마트 워치 UI 5">
+            <img src="Watch06.png"alt="스마트 워치 UI 6">
+            <img src="Watch07.png" alt="스마트 워치 UI 7">
+        </div>
+    </div>
+</section>
+
+<section class="app-ui-showcase">
+    <h2 class="section-title">앱 화면 UI 둘러보기</h2>
+    <div class="masonry-grid">
+        <div class="grid-column scroll-up">
+            <div class="scroll-track">
+                <div class="grid-item"><img src="PHONE.png" alt="앱 화면 UI 1"></div>
+                <div class="grid-item"><img src="PHONE-2.png" alt="앱 화면 UI 2"></div>
+                <div class="grid-item"><img src="PHONE-3.png"alt="앱 화면 UI 3"></div>
+                <div class="grid-item"><img src="PHONE-4.png" alt="앱 화면 UI 4"></div>
+                <div class="grid-item"><img src="PHONE-5.png" alt="앱 화면 UI 1"></div>
+                <div class="grid-item"><img src="PHONE-6.png" alt="앱 화면 UI 2"></div>
+                <div class="grid-item"><img src="PHONE-7.png" alt="앱 화면 UI 3"></div>
+                <div class="grid-item"><img src="PHONE-8.png" alt="앱 화면 UI 4"></div>
+            </div>
+        </div>
+
+        <div class="grid-column scroll-down">
+            <div class="scroll-track">
+                <div class="grid-item"><img src="PHONE-9.png" alt="앱 화면 UI 5"></div>
+                <div class="grid-item"><img src="PHONE-10.png" alt="앱 화면 UI 6"></div>
+                <div class="grid-item"><img src="PHONE-11.png" alt="앱 화면 UI 7"></div>
+                <div class="grid-item"><img src="PHONE-12.png" alt="앱 화면 UI 8"></div>
+                <div class="grid-item"><img src="PHONE-13.png" alt="앱 화면 UI 5"></div>
+                <div class="grid-item"><img src="PHONE-14.png" alt="앱 화면 UI 6"></div>
+                <div class="grid-item"><img src="PHONE-15.png" alt="앱 화면 UI 7"></div>
+                <div class="grid-item"><img src="PHONE-16.png" alt="앱 화면 UI 8"></div>
+            </div>
+        </div>
+
+        <div class="grid-column scroll-up">
+            <div class="scroll-track">
+                <div class="grid-item"><img src="PHONE-17.png" alt="앱 화면 UI 9"></div>
+                <div class="grid-item"><img src="PHONE-9.png" alt="앱 화면 UI 10"></div>
+                <div class="grid-item"><img src="PHONE.png" alt="앱 화면 UI 11"></div>
+                <div class="grid-item"><img src="PHONE-2.png" alt="앱 화면 UI 12"></div>
+                <div class="grid-item"><img src="PHONE-3.png" alt="앱 화면 UI 9"></div>
+                <div class="grid-item"><img src="PHONE-4.png" alt="앱 화면 UI 10"></div>
+                <div class="grid-item"><img src="PHONE-5.png" alt="앱 화면 UI 11"></div>
+                <div class="grid-item"><img src="PHONE-6.png" alt="앱 화면 UI 12"></div>
+            </div>
+        </div>
+
+        <div class="grid-column scroll-down">
+            <div class="scroll-track">
+                <div class="grid-item"><img src="PHONE-7.png"alt="앱 화면 UI 13"></div>
+                <div class="grid-item"><img src="PHONE-8.png" alt="앱 화면 UI 14"></div>
+                <div class="grid-item"><img src="PHONE-9.png" alt="앱 화면 UI 15"></div>
+                <div class="grid-item"><img src="PHONE-10.png" alt="앱 화면 UI 16"></div>
+                <div class="grid-item"><img src="PHONE-11.png" alt="앱 화면 UI 13"></div>
+                <div class="grid-item"><img src="PHONE-12.png" alt="앱 화면 UI 14"></div>
+                <div class="grid-item"><img src="PHONE-13.png" alt="앱 화면 UI 15"></div>
+                <div class="grid-item"><img src="PHONE-14.png" alt="앱 화면 UI 16"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="qr-section">
+    <h2 class="qr-title">
+        지금 앱스토어에서 다운 받고<br>
+        바로 독서 활동을 공유할 수 있어요!
+    </h2>
+    <a href="#" class="app-store-link" title="App Store에서 다운로드">
+        <img src="appstore.png" alt="App store에서 다운로드" class="app-store-badge">
+    </a>
+    <div class="qr-code-wrapper">
+        <img src="qr.png" alt="앱 다운로드 QR 코드" class="qr-code-img">
+    </div>
+</section>
+
+<button id="scrollTopBtn" title="맨 위로" aria-label="맨 위로">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+       fill="currentColor" width="24" height="24" aria-hidden="true">
+    <path d="M12 4l8 8h-6v8h-4v-8H4l8-8z"/>
+  </svg>
+</button>
+
+<footer class="site-footer">
+  <div class="container">
+
+    <!-- 💚 추가할 부분 (맨 위 로고 + 문구) -->
+    <div class="footer-top">
+      <img src="logo2.png" alt="Boutine Logo" class="footer-logo">
+      <p class="footer-thanks">Thank you for watching!</p>
+    </div>
+
+    <hr class="footer-divider">
+
+    <div class="footer-content">
+      <!-- 1) PLANNING -->
+      <div class="footer-column">
+        <h3 class="column-title">PLANNING</h3>
+        <ul class="footer-list">
+          <li>백서윤 / psy091212@naver.com</li>
+        </ul>
+      </div>
+
+      <!-- 2) DESIGN -->
+      <div class="footer-column">
+        <h3 class="column-title">DESIGN</h3>
+        <ul class="footer-list two-col">
+          <li>김보민 / bmkeem0@naver.com</li>
+          <li>박소현 / fkajskrhqus@gmail.com</li>
+          <li>문민경 / dlnlrgus24@gmail.com</li>
+          <li>이나경 / inagyeong195@gmail.com</li>
+        </ul>
+      </div>
+
+      <!-- 3) PROGRAMMING -->
+      <div class="footer-column">
+        <h3 class="column-title">PROGRAMMING</h3>
+        <ul class="footer-list">
+          <li>박지혜 / ji020201@kaywon.ac.kr</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+  </main>
+
+  <script>
+const animationMap = {
+  '.mock': 'show',
+  '.text-box': 'show',
+  '.reveal': 'in',
+  '.reveal-img': 'in',
+  '.section-header': 'animate-visible',
+  '.persona-card': 'animate-visible',
+  '.needs-title': 'in',
+  '.needs-desc': 'in',
+  '.needs-icon': 'in',
+  '.reveal-item': 'in', 
+  '.reveal-image-item': 'in',
+  '.mockup-image': 'is-visible',
+};
+
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const classToAdd = entry.target.dataset.animationClass;
+      if (classToAdd) {
+        entry.target.classList.add(classToAdd);
+      }
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.4 });
+
+
+Object.keys(animationMap).forEach(selector => {
+  document.querySelectorAll(selector).forEach(element => {
+    element.dataset.animationClass = animationMap[selector];
+    observer.observe(element);
+  });
+});
+
+window.addEventListener('load', () => {
+  const mock = document.getElementById('mock');
+  if (mock) mock.classList.add('show');
+});
+
+(function(){
+  const video = document.getElementById('demoVideo');
+  const wrap  = video?.closest('.video-wrap');
+  const btn   = wrap?.querySelector('.play');
+  if(!video || !wrap || !btn) return;
+
+  btn.addEventListener('click', () => {
+    video.muted = false;
+    video.controls = true;
+    video.play().catch(()=>{});
+    btn.remove();
+  });
+})();
+
+
+
+
+
+// 하트 생성 함수
+(function(){
+  const root = document.getElementById('connect-visual');
+  if(!root) return;
+
+
+  function spawnHeart(){
+    const el = document.createElement('span');
+    el.className = 'float-heart';
+    el.textContent = '♥';
+
+    // 랜덤 속성들
+    const size = 30 + Math.random()*40;
+    const dur  = 3.6 + Math.random()*2.6;       
+    const x    = Math.random()*100;               
+    const hues = ['#2dd4bf','#5eead4','#4ade80']; 
+    const col  = hues[(Math.random()*hues.length)|0];
+
+    el.style.setProperty('--size', size+'px');
+    el.style.setProperty('--dur',  dur+'s');
+    el.style.setProperty('--x',    x+'%');
+    el.style.setProperty('--col',  col);
+
+    const wobble = el.animate(
+      [
+        { transform: `translate(-50%, 0) scale(0.8)` },
+        { transform: `translate(calc(-50% + 6px), -30px) scale(0.75)` },
+        { transform: `translate(calc(-50% - 4px), -80px) scale(0.68)` },
+        { transform: `translate(calc(-50% + 2px), -150px) scale(0.55)` }
+      ],
+      { duration: (dur*1000), easing: 'ease-out' }
+    );
+    root.appendChild(el);
+    setTimeout(()=> {
+      wobble.cancel && wobble.cancel();
+      el.remove();
+    }, (dur*1000) + 120);
+  }
+
+  let timer = setInterval(spawnHeart, 380);
+
+  root.addEventListener('mouseenter', ()=> clearInterval(timer));
+  root.addEventListener('mouseleave', ()=> timer = setInterval(spawnHeart, 380));
+
+  for(let i=0;i<6;i++){ setTimeout(spawnHeart, i*120); }
+})();
+
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+const swiper = new Swiper('.mySwiper', {
+  slidesPerView: 'auto', // 한 번에 보여줄 슬라이드 개수 (auto로 설정 시 CSS 너비 기준)
+  spaceBetween: 30,      // 슬라이드 사이 여백
+  loop: true,            // 무한 반복
+  autoplay: {
+    delay: 0,            // 슬라이드가 머무는 시간 (0으로 하면 멈추지 않고 계속 흐름)
+    disableOnInteraction: false, // 사용자가 조작해도 자동재생 계속
+  },
+  speed: 3000,           // 슬라이드 넘어가는 속도 (ms)
+});
+// script.js (기존 Intersection Observer 코드와 통합하거나, 별도로 추가)
+
+// 랭킹 리스트 섹션의 프로그레스 바 + % 카운트업
+const progressObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    // 1) 바 채움
+    entry.target.querySelectorAll('.ranking-item').forEach(item => {
+      const bar = item.querySelector('.progress');
+      const percentEl = item.querySelector('.percentage');
+      if (!bar || !percentEl) return;
+
+      // 목표 퍼센트(예: style="width: 87%;"에 적힌 숫자 읽기)
+      const inline = bar.getAttribute('style') || '';
+      const match = inline.match(/width:\s*([\d.]+)%/i);
+      const target = match ? parseFloat(match[1]) : 0;
+
+      // width는 CSS 애니메이션으로, 숫자는 JS로 카운트
+      bar.style.removeProperty('width');           // 인라인 width 제거
+      bar.style.setProperty('--target', target + '%');
+      // 리플로우로 애니메이션 트리거 확실히
+      void bar.offsetWidth;
+      bar.classList.add('run');
+
+      // 2) 숫자 카운트업
+      const duration = 900; // ms
+      const start = performance.now();
+      const from = 0, to = target;
+
+      function tick(t){
+        const p = Math.min((t - start) / duration, 1);
+        const val = Math.round(from + (to - from) * (1 - Math.pow(1 - p, 2.2))); // ease-out
+        percentEl.textContent = val + '%';
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+
+    observer.unobserve(entry.target);
+  });
+}, { threshold: 0.2 });
+
+const readingRoomSection = document.querySelector('.reading-room-section');
+if (readingRoomSection) progressObserver.observe(readingRoomSection);
+
+document.querySelectorAll('.background-numbers .bg-num').forEach((item) => {
+  // 🔹 랜덤 값들
+  const duration = 2 + Math.random() * 3;       // 2~5초 (속도)
+  const delay = Math.random() * 2;              // 0~2초 (시작 시간)
+  const distance = 15 + Math.random() * 35;     // 15~50px (움직임 크기)
+  const rotate = Math.random() * 6 - 3;         // -3~+3도 회전
+  const direction = Math.random() > 0.5 ? 1 : -1; // 위 or 아래
+  const size = 40 + Math.random() * 130;        // 💥 60~160px 랜덤 크기
+
+  // 🔸 커스텀 속성 + 애니메이션 부여
+  item.style.setProperty('--float-distance', `${distance}px`);
+  item.style.setProperty('--float-rotate', `${rotate}deg`);
+  item.style.setProperty('--float-direction', direction);
+  item.style.fontSize = `${size}px`; // ✨ 크기 랜덤 적용
+  item.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+});
+
+
+
+document.addEventListener('fullscreenchange', () => {
+  const swiperInstance = document.querySelector('.mySwiper')?.swiper;
+  if (swiperInstance) {
+    swiperInstance.autoplay.stop();
+    swiperInstance.autoplay.start();
+  }
+});
+// 섹션 보이면 재생, 안 보이면 일시정지
+const grid = document.querySelector('.masonry-grid');
+const tracks = grid?.querySelectorAll('.scroll-track');
+
+if (grid && tracks?.length) {
+  const io = new IntersectionObserver(([e]) => {
+    const state = e.isIntersecting ? 'running' : 'paused';
+    tracks.forEach(t => t.style.animationPlayState = state);
+  }, { threshold: 0.15 });
+  io.observe(grid);
+}
+
+  </script>
+<script>
+(() => {
+  const btn = document.getElementById('scrollTopBtn');
+  if (!btn) return;
+
+  // 유틸
+  const getTop = (t) =>
+    t === window
+      ? (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0)
+      : t.scrollTop;
+
+  const setTop = (t, y) => {
+    if (t === window) {
+      document.documentElement.scrollTop = y;
+      document.body.scrollTop = y;
+      window.scrollTo(0, y);
+    } else {
+      t.scrollTop = y;
+    }
+  };
+
+  // 부드러움 곡선 (easeOutCubic)
+  const ease = (p) => 1 - Math.pow(1 - p, 3);
+
+  // 기존 클릭 등록 돼 있었다면 제거 후 다시 붙이기 (중복 방지)
+  btn.replaceWith(btn.cloneNode(true));
+  const freshBtn = document.getElementById('scrollTopBtn');
+
+  freshBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // 스무스 스크롤 라이브러리 쓰고 있으면 먼저 그걸 호출 (있으면 바로 종료)
+    try { if (window.lenis?.scrollTo) return window.lenis.scrollTo(0); } catch {}
+    try { if (window.locoScroll?.scrollTo) return window.locoScroll.scrollTo(0, { duration: 800 }); } catch {}
+    try { if (window.fullpage_api?.moveTo) return window.fullpage_api.moveTo(1); } catch {}
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 스크롤 가능한 모든 타깃 수집 (window + overflowY: auto/scroll 요소)
+    const els = Array.from(document.querySelectorAll('*')).filter(el => {
+      const st = getComputedStyle(el);
+      return /(auto|scroll)/.test(st.overflowY) && el.scrollHeight > el.clientHeight + 1;
+    });
+    const targets = [window, ...new Set(els)];
+
+    const starts = targets.map(getTop);
+    const maxStart = Math.max(...starts);
+    if (maxStart === 0) return;
+
+    // 거리 기반 지속시간 (400~1000ms 사이)
+    const dur = reduce ? 0 : Math.min(1000, Math.max(400, maxStart * 0.6));
+    const t0 = performance.now();
+
+    function tick(now) {
+      const p = dur ? Math.min(1, (now - t0) / dur) : 1;
+      const k = ease(p);
+      targets.forEach((t, i) => {
+        const from = starts[i];
+        const y = Math.round((1 - k) * from); // 0으로 수렴
+        setTop(t, y);
+      });
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+})();
+</script>
+
+
+
+
+</body>
+</html>
